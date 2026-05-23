@@ -5,7 +5,6 @@ FastAPI backend for a Ghana agriculture and food systems assistant.
 
 import os
 import re
-import time
 import uuid
 from contextlib import asynccontextmanager
 
@@ -41,29 +40,21 @@ def get_or_create_session(session_id: str | None) -> tuple[str, list[dict]]:
     return new_id, sessions[new_id]
 
 
-def iter_display_chunks(text: str):
-    """Yield readable text pieces even if the upstream provider buffers output."""
-    for piece in re.findall(r"\S+\s*", text):
-        yield piece
-        time.sleep(0.018)
-
-
 # ============================================================================
 # OPENAI CLIENT
 # ============================================================================
 
 def get_client() -> OpenAI:
-    api_key = os.getenv("OPENROUTER_API_KEY")
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        raise HTTPException(status_code=500, detail="OPENROUTER_API_KEY not configured")
+        raise HTTPException(status_code=500, detail="OPENAI_API_KEY not configured")
     return OpenAI(
-        base_url="https://openrouter.ai/api/v1",
         api_key=api_key,
     )
 
 
 def get_model() -> str:
-    return os.getenv("OPENROUTER_MODEL", "openai/gpt-4o")
+    return os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 
 
 def sanitize_reply(text: str) -> str:
@@ -207,7 +198,7 @@ async def chat(request: ChatRequest):
             model=model,
             messages=messages,
             temperature=0.2,
-            max_tokens=300,
+            max_tokens=150,
         )
 
         reply = resp.choices[0].message.content or "I'm sorry, I couldn't generate a response."
@@ -247,7 +238,7 @@ async def stream_chat(request: ChatRequest):
                 model=model,
                 messages=messages,
                 temperature=0.2,
-                max_tokens=300,
+                max_tokens=150,
                 stream=True,
             )
 
@@ -270,7 +261,7 @@ async def stream_chat(request: ChatRequest):
                 cleaned_delta = "\n".join(cleaned_lines)
 
                 if cleaned_delta:
-                    yield from iter_display_chunks(cleaned_delta)
+                    yield cleaned_delta
 
             # Sanitize final assembled reply before saving
             cleaned = sanitize_reply(full_reply)

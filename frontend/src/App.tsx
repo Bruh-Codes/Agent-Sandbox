@@ -27,7 +27,7 @@ type Conversation = {
 };
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "";
-const STORAGE_KEY = "ghana-food-systems-conversations";
+const STORAGE_KEY = "ghana-agri-advisor-v2";
 
 const assistantAvatar =
 	"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='24' fill='%232f6548'/%3E%3Cpath d='M26 58c18-2 29-13 36-34 9 15 8 34-4 45-10 10-26 10-35 1 7-1 18-5 27-16-11 7-20 9-24 4z' fill='%23f1f7f2'/%3E%3Cpath d='M32 70c9-14 20-25 36-34' fill='none' stroke='%23cfe3d5' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E";
@@ -39,8 +39,7 @@ const starterMessages: ChatItem[] = [
 	{
 		id: 1,
 		role: "assistant",
-		content:
-			"Hi, I’m your Ghana Food Systems Copilot. I can help you frame a strong agriculture problem, design an MVP, and prepare a practical presentation around Ghana’s food system.",
+		content: "Hi, I'm your Ghana Food Systems Copilot. Tell me what you need.",
 	},
 ];
 
@@ -71,37 +70,13 @@ function loadConversations(): Conversation[] {
 			return [createConversation()];
 		}
 
-		const SHORT_REPLY = `Quick plan for 10,000 GHS in East Legon:
-
-1) Transport: hire or partner a small pickup. Run 2–3 trips/week carrying tomatoes or peppers. Profit about 15–30%. Verify: ask 3 truck owners and 5 farmers.
-
-2) Mini-processing: rent a small kitchen to make pre-cut veggies or plantain chips. Margin about 40–60%. Verify: check FDA rules and sell to 5 offices.
-
-3) Resell: buy wholesale nearby and sell in East Legon or online for quick cash. Verify: compare wholesale vs retail prices.`;
-
-		const simplifyAssistant = (text: string) => {
-			if (!text) return text;
-			const hasLongDivider =
-				text.includes("---") || (text.match(/-{3,}/) || []).length > 0;
-			const long = text.length > 800 || text.split("\n").length > 12;
-			if (hasLongDivider || long) return SHORT_REPLY;
-			return text.replace(/AgriBridge Ghana/g, "Ghana Food Systems Copilot");
-		};
-
 		return parsed.map((conversation) => ({
 			...conversation,
-			title: conversation.title.replace(
-				"AgriBridge Ghana",
-				"Food Systems Copilot",
-			),
 			messages:
 				Array.isArray(conversation.messages) && conversation.messages.length > 0
 					? conversation.messages.map((message) => ({
 							...message,
-							content:
-								message.role === "assistant"
-									? simplifyAssistant(String(message.content))
-									: String(message.content),
+							content: String(message.content),
 							pending: false,
 						}))
 					: starterMessages,
@@ -166,28 +141,6 @@ export default function App() {
 		conversations.find(
 			(conversation) => conversation.id === activeConversationId,
 		) ?? conversations[0];
-
-	// Immediately simplify long or dashed assistant replies to a very short summary
-	useEffect(() => {
-		const SHORT_REPLY = `Short plan (10,000 GHS, East Legon):\n\n• Transport: hire/partner a small pickup. 2–3 trips/week — ~15–30% profit. Verify: ask 3 truck owners + 5 farmers.\n• Mini-processing: small kitchen for pre-cut veggies or plantain chips. ~40–60% margins. Verify: check FDA + test-sell to 5 offices.`;
-
-		setConversations((current) =>
-			current.map((conversation) => ({
-				...conversation,
-				messages: conversation.messages.map((m) => {
-					if (m.role !== "assistant") return m;
-					const hasDivider =
-						typeof m.content === "string" &&
-						(m.content.includes("---") || /-{3,}/.test(m.content));
-					const long = typeof m.content === "string" && m.content.length > 800;
-					if (hasDivider || long) {
-						return { ...m, content: SHORT_REPLY };
-					}
-					return m;
-				}),
-			})),
-		);
-	}, []);
 
 	const messages = activeConversation?.messages ?? starterMessages;
 	const sessionId = activeConversation?.sessionId ?? null;
@@ -256,7 +209,7 @@ export default function App() {
 	const chatConfig: ChatConfig = useMemo(
 		() => ({
 			leftPerson: {
-				name: "Food Systems Copilot",
+				name: "Ghana Food Systems Copilot",
 				avatar: assistantAvatar,
 			},
 			rightPerson: {
@@ -319,9 +272,7 @@ export default function App() {
 
 			if (!response.ok) {
 				const detail = await response.text().catch(() => "");
-				throw new Error(
-					detail || "The food systems copilot could not respond right now.",
-				);
+				throw new Error(detail || "The advisor could not respond right now.");
 			}
 
 			const streamedSessionId = response.headers.get("X-Session-Id");
@@ -423,9 +374,11 @@ export default function App() {
 							</div>
 							<div className="min-w-0">
 								<p className="truncate text-sm font-semibold text-[#17201b]">
-									Food Systems Copilot
+									Ghana Food Systems Copilot
 								</p>
-								<p className="truncate text-xs text-[#597064]">Ghana focus</p>
+								<p className="truncate text-xs text-[#597064]">
+									Brutally honest advice
+								</p>
 							</div>
 						</div>
 
@@ -502,7 +455,7 @@ export default function App() {
 											event.currentTarget.form?.requestSubmit();
 										}
 									}}
-									placeholder="Ask about Ghana agriculture, food systems, or your app idea..."
+									placeholder="tell me what you need"
 									rows={1}
 									className="min-h-11 flex-1 resize-none bg-transparent px-3 py-2 text-sm leading-6 text-[#17201b] outline-none placeholder:text-[#789082]"
 									disabled={isSending}
