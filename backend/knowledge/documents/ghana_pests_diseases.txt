@@ -1,0 +1,156 @@
+Ghana Pests and Diseases Control Guide
+
+== COCOA PESTS AND DISEASES ==
+
+=== Black Pod Disease (Phytophthora megakarya / P. palmivora) ===
+- Status: Most destructive cocoa disease in Ghana
+- Season: Worsens during heavy rains (June-September)
+- 2025 outbreak: Reported across 72 cocoa-growing districts due to excessive rainfall
+- Symptoms: Brown spots on pods spreading rapidly, internal brown rot
+- Spread: Splashing rain, water currents, wind, ants
+- Losses: Can reduce harvest by 30% or more
+- Control under CODAPEC:
+  - Mass spraying rounds: April-May (first round), August-September (second round)
+  - Copper-based fungicides (e.g., Kocide, Ridomil) applied to trunk and branches
+  - Weekly removal of infected pods combined with chemical application
+  - ~1.0 million hectares covered for black pod control
+- Integrated management: Pruning for air circulation, shade optimization, resistant varieties
+
+=== Cocoa Swollen Shoot Virus (CSSVD) ===
+- Status: Long-term threat, worsening in Ghana
+- 2024-2025: Ravaged plantations for two consecutive seasons
+- Symptoms: Stem swelling, vein clearing, leaf blotches/streaks
+- Yield impact: 30-50% reduction
+- Spread: Mealybugs (Planococcus spp.)
+- Control: No cure available
+  - "Cutting-out approach": Infected trees must be ripped out and burnt
+  - COCOBOD secured $100 million from World Bank for rehabilitation
+  - Shade reduces severity
+  - Replanting with tolerant/resistant varieties after fallow period
+
+=== Mirids / Capsids (Distantiella theobroma, Sahlbergella singularis) ===
+- Status: Major insect pest of cocoa in Ghana
+- Symptoms: Pod lesions, dieback of shoots, cankers on branches
+- Control: CODAPEC mass spraying (April-May and August-September)
+- Insecticides applied free to farmers by trained spraying gangs
+- ~1.4 million hectares covered for insect control
+
+=== Cocoa Pod Borer (Conopomorpha cramerella) ===
+- Emerging threat in West Africa
+- Larvae bore into pods, destroying beans
+- Control: Sanitation (remove and destroy infested pods), regular harvesting
+
+== MAIZE PESTS ==
+
+=== Fall Armyworm (Spodoptera frugiperda) ===
+- Status: Most serious maize pest in Ghana since 2016-2017 outbreak
+- Host range: Over 353 plant species, primarily Poaceae, Asteraceae, Fabaceae
+- Symptoms: "Windowing" on leaves, whorl damage, frass, stunted growth
+- Yield loss: Up to 34% in severe infestations
+- Monitoring: FAO's FAMEWS (Fall Armyworm Monitoring and Early Warning System)
+- Integrated Pest Management (IPM) approach recommended:
+
+Cultural control:
+  - Early planting to avoid peak pest populations
+  - Avoid staggered planting
+  - Clean cultivation and weed management
+  - Crop rotation
+  - Balanced fertilizer application
+
+Biological control:
+  - Natural enemies: Cotesia ruficrus (parasitoid), spiders, predators
+  - Egg parasitoids (Trichogramma spp.) being researched in Ghana
+  - Neem-based botanicals
+  - Lemon basil (Ocimum africanum) water extract: trials in Northern Region show efficacy
+  - Entomopathogenic fungi and nematodes under development
+
+Chemical control (when IPM insufficient):
+  - Emamectin benzoate
+  - Chlorantraniliprole
+  - Lambda-cyhalothrin
+  - Cartap hydrochloride
+  - Apply when threshold of 20% infested plants is reached
+  - Avoid broad-spectrum insecticides that kill beneficials
+
+=== Stem Borers (Busseola fusca, Sesamia calamistis) ===
+- Symptoms: "Dead heart" in young plants, stem tunneling, broken stalks
+- Control: Crop rotation, destruction of crop residues, early planting
+
+=== Larger Grain Borer (Prostephanus truncatus) ===
+- Major post-harvest pest of maize and cassava
+- Control: Proper drying, hermetic storage (GrainPro bags, silos), Ateco insecticide
+
+== VEGETABLE PESTS ==
+
+=== Tomato: ===
+- Tuta absoluta (Tomato leafminer): Larvae mine leaves, bore into fruits
+  - Control: Pheromone traps, selective insecticides (indoxacarb, chlorantraniliprole)
+- Bacterial wilt (Ralstonia solanacearum): Wilting, vascular discoloration
+  - Control: Resistant varieties, crop rotation, soil solarization
+- Late blight (Phytophthora infestans): Leaf lesions, fruit rot
+  - Control: Mancozeb or copper-based fungicides, preventive application in wet season
+- Early blight (Alternaria solani): Target spots on leaves
+- Blossom-end rot: Calcium deficiency (physiological, not pathogen)
+  - Control: Consistent watering, calcium application
+
+=== Pepper: ===
+- Aphids, thrips, whiteflies: Control with neem oil, imidacloprid
+- Anthracnose (Colletotrichum spp.): Fruit rot
+  - Control: Mancozeb + copper fungicide rotation
+
+=== Onion: ===
+- Thrips (Thrips tabaci): Silvering of leaves, stunted bulbs
+  - Control: Spinetoram, lambda-cyhalothrin, crop rotation
+- Purple blotch (Alternaria porri): Purplish leaf lesions
+  - Control: Chlorothalonil or mancozeb
+
+== CASSAVA PESTS AND DISEASES ==
+
+=== Cassava Mosaic Virus (CMV/CMD) ===
+- Symptoms: Mosaic pattern, leaf distortion, stunting
+- Control: Resistant varieties (e.g., Afisiafi, Essam Bankye)
+
+=== Cassava Green Mite (Mononychellus tanajoa) ===
+- Symptoms: Leaf drying, defoliation
+- Control: Resistant varieties, predatory mites
+
+=== Cassava Mealybug (Phenacoccus manihoti) ===
+- Control: Biological control (Anagyrus lopezi parasitoid), neem sprays
+
+== YAM PESTS AND DISEASES ==
+
+=== Yam Beetle (Heteroligus meles) ===
+- Symptoms: Holes in tubers
+- Control: Seed dressing with chlorpyrifos or imidacloprid
+
+=== Yam Mosaic Virus ===
+- Control: Use of virus-free seed yams
+
+=== Anthracnose (Colletotrichum gloeosporioides) ===
+- Control: Resistant varieties, mancozeb spray
+
+== GENERAL PEST MANAGEMENT PRINCIPLES FOR GHANA ==
+
+1. Integrated Pest Management (IPM): Use cultural, biological, and chemical methods in combination
+2. Monitoring and scouting: Regular field inspection is essential
+3. Threshold-based action: Apply control measures only when pest populations reach economic threshold
+4. Pesticide rotation: Avoid using same chemical class repeatedly to prevent resistance
+5. Proper pesticide handling: Use PPE, follow label rates, observe pre-harvest intervals
+6. Preservation of natural enemies: Avoid broad-spectrum pesticides when possible
+7. Government support: Contact MoFA district offices for pest alerts and extension advice
+
+=== CODAPEC PROGRAM (Cocoa Disease and Pest Control) ===
+- Launched: 2001/2002 cocoa season
+- Managed by: Ghana Cocoa Board (COCOBOD)
+- Coverage: All mapped and productive cocoa farms
+- Components:
+  - Mass spraying (insects): April-May and August-September, ~1.4 million ha
+  - Black pod control: Fungicide application, ~1.0 million ha
+  - Fertilizer/Hi-TECH: Granular and liquid fertilizers
+- Staff: Over 60,000 trained sprayers plus coordinators
+- Cost: Free to farmers
+
+=== FALL ARMYWORM CONTROL INITIATIVES ===
+- FAO-China South-South Cooperation project (2025): Training on FAMEWS, IPM demo plots
+- KAFACI (Korea-Africa Food and Agriculture Cooperation Initiative): Multi-country FAW research
+- CSIR-Ghana: Coordinating FAW research across 13 institutes

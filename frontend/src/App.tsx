@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { Leaf, MessageSquare, Plus, Send } from "lucide-react";
+import { MessageSquare, Plus, Send } from "lucide-react";
 import ChatComponent, {
 	ChatConfig,
 	Message,
@@ -27,19 +27,19 @@ type Conversation = {
 };
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "";
-const STORAGE_KEY = "ghana-agri-advisor-v2";
+const STORAGE_KEY = "farmdesk-v1";
 
 const assistantAvatar =
-	"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='24' fill='%232f6548'/%3E%3Cpath d='M26 58c18-2 29-13 36-34 9 15 8 34-4 45-10 10-26 10-35 1 7-1 18-5 27-16-11 7-20 9-24 4z' fill='%23f1f7f2'/%3E%3Cpath d='M32 70c9-14 20-25 36-34' fill='none' stroke='%23cfe3d5' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E";
+	"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='24' fill='%231a7a48'/%3E%3Cpath d='M26 58c18-2 29-13 36-34 9 15 8 34-4 45-10 10-26 10-35 1 7-1 18-5 27-16-11 7-20 9-24 4z' fill='%23f1f7f2'/%3E%3Cpath d='M32 70c9-14 20-25 36-34' fill='none' stroke='%23cfe3d5' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E";
 
 const userAvatar =
-	"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='24' fill='%23e7f1ea'/%3E%3Ccircle cx='48' cy='36' r='16' fill='%232f6548'/%3E%3Cpath d='M22 78c4-18 17-28 26-28s22 10 26 28' fill='%232f6548'/%3E%3C/svg%3E";
+	"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='24' fill='%23e8f2ec'/%3E%3Ccircle cx='48' cy='36' r='16' fill='%231a7a48'/%3E%3Cpath d='M22 78c4-18 17-28 26-28s22 10 26 28' fill='%231a7a48'/%3E%3C/svg%3E";
 
 const starterMessages: ChatItem[] = [
 	{
 		id: 1,
 		role: "assistant",
-		content: "Hi, I'm your Ghana Food Systems Copilot. Tell me what you need.",
+		content: "Hi, I'm FarmDesk. Tell me what you need.",
 	},
 ];
 
@@ -180,36 +180,36 @@ export default function App() {
 	const uiConfig: UiConfig = {
 		containerWidth: "100%",
 		containerHeight: "100%",
-		backgroundColor: "#eef4ef",
+		backgroundColor: "#f5f7f5",
 		loader: {
-			dotColor: "#3f7d5a",
+			dotColor: "#3d8b5e",
 		},
 		linkBubbles: {
-			backgroundColor: "#e7f1ea",
-			textColor: "#2f6548",
-			iconColor: "#2f6548",
-			borderColor: "#d8e6dc",
+			backgroundColor: "#e8f2ec",
+			textColor: "#1a7a48",
+			iconColor: "#1a7a48",
+			borderColor: "#dce3de",
 		},
 		leftChat: {
 			backgroundColor: "#ffffff",
-			textColor: "#17201b",
-			borderColor: "#d7e3da",
+			textColor: "#1d2320",
+			borderColor: "#dce3de",
 			showBorder: true,
-			nameColor: "#3f7d5a",
+			nameColor: "#3d8b5e",
 		},
 		rightChat: {
-			backgroundColor: "#2f6548",
+			backgroundColor: "#1a7a48",
 			textColor: "#ffffff",
-			borderColor: "#2f6548",
+			borderColor: "#1a7a48",
 			showBorder: false,
-			nameColor: "#597064",
+			nameColor: "#4a7b5d",
 		},
 	};
 
 	const chatConfig: ChatConfig = useMemo(
 		() => ({
 			leftPerson: {
-				name: "Ghana Food Systems Copilot",
+				name: "FarmDesk",
 				avatar: assistantAvatar,
 			},
 			rightPerson: {
@@ -364,20 +364,17 @@ export default function App() {
 	}
 
 	return (
-		<main className="h-screen overflow-hidden bg-[#eef4ef] text-[#17201b]">
+		<main className="h-screen overflow-hidden bg-farm-bg text-farm-text">
 			<div className="flex h-full w-full p-3 sm:p-4">
-				<aside className="flex w-72 flex-shrink-0 flex-col overflow-hidden rounded-l-lg border border-r-0 border-[#d7e3da] bg-white">
-					<div className="border-b border-[#d7e3da] p-4">
+				<aside className="flex w-72 flex-shrink-0 flex-col overflow-hidden rounded-l-lg border border-r-0 border-farm-border bg-white">
+					<div className="border-b border-farm-border p-4">
 						<div className="mb-4 flex items-center gap-3">
-							<div className="flex size-10 items-center justify-center rounded-lg bg-[#2f6548] text-white">
-								<Leaf data-icon="inline-start" />
+							<div className="flex size-10 items-center justify-center rounded-lg bg-farm-primary">
+								<img src={assistantAvatar} alt="FarmDesk" className="size-10 rounded-lg" />
 							</div>
 							<div className="min-w-0">
-								<p className="truncate text-sm font-semibold text-[#17201b]">
-									Ghana Food Systems Copilot
-								</p>
-								<p className="truncate text-xs text-[#597064]">
-									Brutally honest advice
+								<p className="truncate text-sm font-semibold text-farm-text">
+									FarmDesk
 								</p>
 							</div>
 						</div>
@@ -385,7 +382,7 @@ export default function App() {
 						<button
 							type="button"
 							onClick={startNewConversation}
-							className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#2f6548] px-3 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-[#27553d]"
+							className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-farm-primary px-3 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-farm-primary-hover"
 						>
 							<Plus data-icon="inline-start" />
 							New chat
@@ -393,7 +390,7 @@ export default function App() {
 					</div>
 
 					<div className="flex min-h-0 flex-1 flex-col">
-						<div className="px-4 pb-2 pt-4 text-xs font-semibold uppercase tracking-wide text-[#789082]">
+						<div className="px-4 pb-2 pt-4 text-xs font-semibold uppercase tracking-wide text-farm-muted">
 							Chat history
 						</div>
 						<div className="chat-scrollbar-hidden flex-1 overflow-y-auto px-2 pb-3">
@@ -408,8 +405,8 @@ export default function App() {
 										disabled={isSending && !isActive}
 										className={`mb-1 flex w-full items-start gap-3 rounded-lg px-3 py-3 text-left transition ${
 											isActive
-												? "bg-[#e7f1ea] text-[#17201b]"
-												: "text-[#41594b] hover:bg-[#f4f8f5]"
+												? "bg-farm-primary-light text-farm-text"
+												: "text-farm-muted hover:bg-farm-bg"
 										} disabled:cursor-not-allowed disabled:opacity-60`}
 									>
 										<MessageSquare
@@ -420,7 +417,7 @@ export default function App() {
 											<span className="block truncate text-sm font-medium">
 												{conversation.title}
 											</span>
-											<span className="mt-1 block truncate text-xs text-[#789082]">
+											<span className="mt-1 block truncate text-xs text-farm-muted">
 												{formatTime(conversation.updatedAt)}
 											</span>
 										</span>
@@ -432,8 +429,8 @@ export default function App() {
 				</aside>
 
 				<section className="flex min-w-0 flex-1 items-stretch">
-					<div className="flex min-h-0 w-full flex-col overflow-hidden rounded-r-lg border border-t-0 border-[#d7e3da] bg-white shadow-[0_24px_80px_rgba(47,101,72,0.12)]">
-						<div className="flex min-h-0 flex-1 items-stretch justify-center bg-[#eef4ef] p-3 sm:p-5">
+					<div className="flex min-h-0 w-full flex-col overflow-hidden rounded-r-lg border border-t-0 border-farm-border bg-white shadow-[0_24px_80px_rgba(26,122,72,0.1)]">
+						<div className="flex min-h-0 flex-1 items-stretch justify-center bg-farm-bg p-3 sm:p-5">
 							<ChatComponent
 								key={activeConversationId}
 								config={chatConfig}
@@ -443,9 +440,9 @@ export default function App() {
 
 						<form
 							onSubmit={sendMessage}
-							className="border-t border-[#d7e3da] bg-white p-3 sm:p-4"
+							className="border-t border-farm-border bg-white p-3 sm:p-4"
 						>
-							<div className="flex items-end gap-3 rounded-lg border border-[#cbdad0] bg-[#f7fbf8] p-2 shadow-inner">
+							<div className="flex items-end gap-3 rounded-lg border border-farm-input-border bg-farm-input-bg p-2 shadow-inner">
 								<textarea
 									value={input}
 									onChange={(event) => setInput(event.target.value)}
@@ -457,20 +454,20 @@ export default function App() {
 									}}
 									placeholder="tell me what you need"
 									rows={1}
-									className="min-h-11 flex-1 resize-none bg-transparent px-3 py-2 text-sm leading-6 text-[#17201b] outline-none placeholder:text-[#789082]"
+									className="min-h-11 flex-1 resize-none bg-transparent px-3 py-2 text-sm leading-6 text-farm-text outline-none placeholder:text-farm-placeholder"
 									disabled={isSending}
 								/>
 								<button
 									type="submit"
 									disabled={!input.trim() || isSending}
-									className="inline-flex size-11 flex-shrink-0 items-center justify-center rounded-lg bg-[#2f6548] text-white shadow-sm transition hover:bg-[#27553d] disabled:cursor-not-allowed disabled:bg-[#9fb6a8]"
+									className="inline-flex size-11 flex-shrink-0 items-center justify-center rounded-lg bg-farm-primary text-white shadow-sm transition hover:bg-farm-primary-hover disabled:cursor-not-allowed disabled:bg-farm-muted"
 									aria-label="Send message"
 								>
 									<Send data-icon="inline-start" />
 								</button>
 							</div>
 							{error ? (
-								<p className="mt-2 text-sm text-[#9c3c2f]">{error}</p>
+								<p className="mt-2 text-sm text-farm-error">{error}</p>
 							) : null}
 						</form>
 					</div>

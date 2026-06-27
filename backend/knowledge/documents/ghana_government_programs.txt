@@ -1,0 +1,127 @@
+Ghana Government Agricultural Programs and Policies
+
+== PLANTING FOR FOOD AND JOBS (PFJ) PHASE I (2017-2022) ==
+Launched April 2017 by President Akufo-Addo. Flagship agricultural transformation program.
+
+Key features:
+- 50% subsidy on improved seeds and fertilizers
+- Target: 1.5 million farmers annually
+- Goal: Increase yields of staple crops (maize, rice, soybean, sorghum)
+- Budget: GH¢614 million (2022), GH¢660 million (2023)
+- Achievements: Increased ag GDP growth rate, higher crop yields
+- Limitations: Budget strain on government, limited value chain adoption, low access to credit
+
+Five modules:
+1. Food Crops (main PFJ)
+2. Planting for Export and Rural Development (PERD)
+3. Greenhouse Technology Villages (3 villages)
+4. Rearing for Food and Jobs (RFJ) - livestock
+5. Agricultural Mechanization Services Centers (AMSECs)
+
+== PLANTING FOR FOOD AND JOBS PHASE II (PFJ 2.0) - 2023 to present ==
+Launched August 28, 2023 at University for Development Studies, Tamale.
+Five-year master plan (2023-2028).
+
+Key changes from Phase I:
+- Shift from direct input subsidy to smart agricultural input credit system (ICS)
+- Linked to structured market arrangements (off-taker agreements)
+- Private sector focus
+- Digitized platform for management, monitoring, coordination
+- Farmer registration with unique ID and biometrics
+- Farm GPS mapping for size and commodity tracking
+
+Eleven priority commodities:
+- Grains: Maize, rice, soybean, sorghum
+- Starchy staples: Cassava, yam, plantain
+- Vegetables: Tomato, pepper, onion
+- Poultry
+
+Key actors in PFJ 2.0:
+1. Input suppliers: Provide seeds, fertilizers, pesticides on deferred credit
+2. Aggregators: Contract with farmers, supply inputs, arrange off-take
+3. Farmers: Registered with biometrics, mapped farms
+4. Service providers: AMSECs (mechanization) and Extension Agents
+5. Warehouse Infrastructure & Collateral Managers (WICMs): Storage
+6. Off-takers: Industry, processors, NAFCO, market women
+7. Financial institutions: Insurance, GIRSAL (guarantee cover)
+
+== CODAPEC / HI-TECH PROGRAM ==
+Managed by COCOBOD since 2001/2002 season.
+Free nationwide cocoa pest/disease control and fertilizer program.
+
+Components:
+1. Mass Spraying: Capsids/insects (April-May, August-September) - 1.4 million ha covered
+2. Black Pod Control: Fungicide application - 1.0 million ha covered
+3. Hi-TECH Fertilizer: Granular and liquid fertilizers, soil amendments
+
+Structure:
+- National Coordinator + 3 Deputy Coordinators (Insect Control, Black Pod, Fertilizer)
+- 7 Regional Coordinators, 70 District Coordinators
+- Over 60,000 trained sprayers nationwide
+- Free to all mapped and productive cocoa farms
+
+2024-2025 challenges: COCOBOD GHS 33 billion debt burden affected input procurement.
+Black pod outbreaks in 72 districts due to excessive rainfall.
+Production fell to ~590,000 metric tons (target was 610,000).
+
+== REARING FOR FOOD AND JOBS (RFJ) ==
+Livestock module under PFJ umbrella.
+Focus: Poultry, small ruminants, pigs.
+Poultry Intensification Scheme (PIS) supports poultry farmers.
+
+== GHANA TREE CROP DIVERSIFICATION PROJECT ==
+- World Bank IDA: $200 million (2023)
+- Managed by COCOBOD and Tree Crops Development Authority
+- Goal: Modernize and diversify tree crop production
+- Crops: Cocoa plus cashew, coconut, rubber
+
+== AGRI-NET (GHANA AGRICULTURAL SECTOR INVESTMENT PROGRAM) ==
+World Bank-supported program.
+Recent: Ghana launched AgriConnect Compact (June 3, 2026).
+- National framework to strengthen food security, create jobs, reduce imports
+- Priority value chains: Cocoa, oil palm, rice, maize, poultry
+- Also: Cashew, coconut, rubber, fisheries, forest economy
+- First phase: 2026-2030
+- Backed by World Bank Group, AfDB, IFAD, Google, Bayer
+
+== GHANA CARES (GHANA COVID-19 ALLEVIATION AND REVITALIZATION OF ENTERPRISES SUPPORT) ==
+Includes agricultural components:
+- Interest rate subsidy for agribusinesses
+- Support for commercial farming
+- Incentives for import substitution
+
+== FERTILIZER POLICY ==
+- 2008: Voucher-based 50% subsidy reintroduced
+- 2017-2022: PFJ Phase I - 50% fertilizer subsidy
+- 2023: Suspended during PFJ review
+- PFJ 2.0: Input credit system (no direct subsidy)
+- New fertilizer blends (CSIR-SRI validated): Zone-specific NPK blends for maize, cassava, soybean, rice
+- AGRA and MoFA launched Fertilizer Bulk Blending Guidelines (April 2024)
+- Previous blanket recommendation: 2 bags 15-15-15 + 1 bag SoA per acre
+
+== COCOA PRICING AND REGULATION ==
+- Producer price is regulated by COCOBOD annually
+- 2024/25 price: GH¢48,000 per tonne (increased from GH¢20,928)
+- 2025/26: GH¢65,000 per tonne (announced September 2025)
+- Ghana is 2nd largest cocoa producer globally (after Cote d'Ivoire)
+- All cocoa exports handled through COCOBOD
+
+== TRADE POLICIES ==
+- August 2024: Temporary ban on grain exports (corn, rice) during drought
+- Benchmark Value Discount: Withdrawn in 2023 budget
+  - Local producers supported, importers opposed
+  - Resulted in higher imported food prices
+- Ghana does not produce wheat; all wheat is imported (850,000 MT annually)
+- Major export crops: Cocoa, gold, oil, cashew, timber
+
+== EXTENSION SERVICES ==
+- Extension agent to farmer ratio: ~1:1,500 (below FAO recommendation of 1:500)
+- Under PFJ 2.0: Extension agents assigned to aggregators in production zones
+- Digital tools: Cropping Calendar and Agro-Advisory System (CSIR-INSTI, CSIR-CRI, CGIAR)
+- GMet and MoFA collaboration: Customized district-specific production calendars (FSRP)
+
+== CLIMATE ADAPTATION PROGRAMS ==
+- West Africa Food System Resilience Programme (FSRP): 20 automated weather stations installed
+- Cropping Calendar and Agro-Advisory System: Real-time weather + crop phenology + soil data
+- Ghana Climate Atlas (GMet): Climate projections for agricultural planning
+- Ministry of Food and Agriculture (MoFA) leads climate-smart agriculture initiatives

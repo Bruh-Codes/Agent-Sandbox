@@ -1,4 +1,4 @@
-# Ghana Food Systems Copilot
+# FarmDesk
 
 A brutally honest agriculture business advisor for Ghana. Tells you the truth about your capital, location, and farming idea — no sugarcoating.
 

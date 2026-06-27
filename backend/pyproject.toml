@@ -1,8 +1,7 @@
 [project]
-name = "my-project"
+name = "farmdesk-backend"
 version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
+description = "FarmDesk API backend"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi>=0.115.0",
@@ -10,3 +9,6 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "uvicorn[standard]>=0.34.0",
 ]
+
+[tool.setuptools]
+py-modules = ["server", "agri_prompt"]

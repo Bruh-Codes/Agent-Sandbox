@@ -1,0 +1,226 @@
+Ghana Comprehensive Crop Calendar and Planting Guide
+
+== OVERVIEW ==
+Ghana has two main rainfall regimes that define the agricultural calendar:
+- Forest/Southern zone: Bimodal rainfall (March-July and September-November)
+- Northern/Savanna zone: Unimodal rainfall (May-October)
+The transition zone (Brong-Ahafo) has a mix of both patterns.
+
+== MAJOR CEREALS ==
+
+=== Maize (Zea mays) ===
+- Growing regions: Brong-Ahafo (leading), Ashanti, Eastern, Volta, Northern
+- Major season planting: March-May (rains begin)
+- Major season harvest: July-August (3-4 months)
+- Minor season planting: August-October (September rains)
+- Minor season harvest: November-January
+- Improved varieties: Obatanpa (GH110-5), Aburohoma, Mamaba, Golden Jubilee, Omankwa, Dorke SR
+- Maturity: 90-120 days depending on variety
+- Spacing: 80cm x 40cm (2 seeds/hole)
+- Seed rate: 20-25 kg/ha for improved varieties
+- Expected yield (improved): 3.5-5.5 t/ha under good management
+- Expected yield (local): 1.0-1.5 t/ha
+- Note: Obatanpa is the most popular improved variety, known for high yield and tolerance to low soil fertility
+
+=== Rice (Oryza sativa) ===
+- Growing regions: Volta (largest), Northern, Upper East, Upper West, Ashanti
+- Major season planting: April-June
+- Major season harvest: August-October
+- Minor season planting: September-November (irrigated areas)
+- Minor season harvest: January-March
+- Improved varieties: Jasmine 85, AGRA rice, Togo Marshall, Digang, Sikamo, Ex-Baika
+- Maturity: 110-135 days
+- Planting method: Transplanting (21-28 day seedlings) or direct seeding
+- Seed rate (transplanting): 40-50 kg/ha
+- Seed rate (direct seeding): 80-120 kg/ha
+- Expected yield (irrigated): 4.0-6.0 t/ha
+- Expected yield (rainfed): 1.5-3.0 t/ha
+- Main production areas: Ada East (Volta), Nasia Valley (Northern region)
+- Government priority crop under Planting for Food and Jobs (PFJ)
+
+=== Millet (Pennisetum glaucum) ===
+- Growing regions: Upper East, Upper West, Northern
+- Planting season: May-July (with early rains)
+- Harvest season: September-October
+- Maturity: 90-120 days
+- Key varieties: Nara, Kpari, Zaa
+- Drought-tolerant, ideal for northern savanna zones
+
+=== Sorghum (Sorghum bicolor) ===
+- Growing regions: Upper East, Upper West, Northern
+- Planting season: May-July
+- Harvest season: September-November
+- Maturity: 100-150 days
+- Key varieties: Kapaala, Naga White, Dorado
+- Uses: Food (TZ, porridge), brewing (pito), livestock feed
+
+== ROOT AND TUBER CROPS ==
+
+=== Cassava (Manihot esculenta) ===
+- Growing regions: Central (leading), Eastern, Volta, Brong-Ahafo, Northern
+- Planting season: Year-round, peak March-May
+- Harvest: 10-18 months after planting (can be left in ground)
+- Improved varieties: Afisiafi, Abasa-fitaa (Bankyehemaa), Gblemoduade, Essam Bankye, Nkabom
+- Maturity: 12-18 months for improved varieties
+- Spacing: 100cm x 100cm
+- Planting material: Stem cuttings 25-30cm long
+- Expected yield: 15-30 t/ha (improved), 8-12 t/ha (local)
+- Note: Ghana is among the top 5 global cassava producers
+- Major processing: Gari, fufu flour, starch, ethanol
+
+=== Yam (Dioscorea spp.) ===
+- Growing regions: Northern (leading), Brong-Ahafo, Eastern, Volta
+- Planting season: October-February (requires dry season for maturation)
+- Major harvest: July-November (6-9 months)
+- Improved varieties: Pona (D. alata), Dente, Serwah, Lila, Kukrupa, Matches
+- Maturity: 6-10 months depending on variety
+- Seed yam rate: 1.5-2.5 t/ha (yam setts)
+- Expected yield: 12-20 t/ha (improved), 8-12 t/ha (local)
+- Spacing: 100cm x 100cm for ware yams
+- Ghana is the 2nd largest yam producer in the world after Nigeria
+- Main species: D. alata (white yam, water yam), D. rotundata (yellow yam)
+- Storage: Can be stored 3-6 months in well-ventilated barns
+
+=== Cocoyam (Colocasia esculenta & Xanthosoma sagittifolium) ===
+- Growing regions: Ashanti, Eastern, Volta, Central
+- Planting season: March-June
+- Harvest: 8-12 months after planting
+- Expected yield: 6-10 t/ha
+- Often intercropped in cocoa and palm plantations
+
+== CASH CROPS ==
+
+=== Cocoa (Theobroma cacao) ===
+- Growing regions: Western North (leading), Western, Ashanti, Central, Eastern, Volta, Brong-Ahafo
+- Main crop season: October-March (peak harvest)
+- Light crop (mid-crop) season: May-August
+- Key varieties: Amazonia (hybrid), Amelonado, Upper Amazon, Inter-Upper Amazon
+- Maturity: First pods at 18-24 months, full production at 4-5 years
+- Expected yield: 400-600 kg/ha (traditional), 800-1200 kg/ha (with good management)
+- Spacing: 3m x 3m (1111 trees/ha)
+- Shade trees required: Gliricidia, Terminalia, Plantain
+- Ghana is the 2nd largest cocoa producer in the world (after Cote d'Ivoire)
+- Major diseases: Black pod disease, Swollen shoot virus, Mistletoe
+- Major pests: Mirids (capsids), Cocoa pod borer
+- CODAPEC program provides free spraying of fungicides/insecticides
+- Cocoa price is regulated by COCOBOD annually
+
+=== Oil Palm (Elaeis guineensis) ===
+- Growing regions: Western, Eastern, Central, Ashanti
+- Planting season: March-September
+- First harvest: 30-36 months after planting
+- Peak production: 7-12 years
+- Economic life: 20-30 years
+- Varieties: Dura (thick shell), Pisifera (thin shell), Tenera (Dura x Pisifera hybrid, best for oil)
+- Tenera yields 4-7 t/ha of crude palm oil vs 1.5-2 t/ha for Dura
+- Expected yield: 15-25 t/ha fresh fruit bunches (improved tenera)
+
+=== Cashew (Anacardium occidentale) ===
+- Growing regions: Brong-Ahafo, Northern, Upper East, Central
+- Planting season: April-June
+- First harvest: 3 years after planting
+- Full production: 7-10 years
+- Harvest season: February-May
+- Expected yield: 500-1500 kg/ha raw nuts
+- Ghana exported ~150,000+ tonnes of raw cashew nuts annually
+
+=== Cotton (Gossypium spp.) ===
+- Growing regions: Northern, Upper East, Upper West
+- Planting season: May-July
+- Harvest: November-December
+- Maturity: 120-150 days
+- Key varieties: Bt cotton approved in 2020
+
+=== Coffee (Coffea canephora - Robusta) ===
+- Growing regions: Western, Ashanti, Brong-Ahafo, Volta
+- Planting season: March-May
+- First harvest: 3 years after planting
+- Harvest season: October-December
+- Mostly Robusta variety
+
+== VEGETABLES ==
+
+=== Tomato (Solanum lycopersicum) ===
+- Growing regions: Upper East (leading), Brong-Ahafo, Central, Greater Accra
+- Major season planting: September-November (for December-February harvest)
+- Major season harvest: December-March
+- Minor season planting: May-July
+- Minor season harvest: July-September
+- Key varieties: Power, Pectomech, Roma VF, Tropimech
+- Maturity: 75-90 days from transplanting
+- Expected yield: 10-20 t/ha
+
+=== Onion (Allium cepa) ===
+- Growing regions: Upper East (most important), Upper West
+- Planting season: September-November (dry season cultivation with irrigation)
+- Harvest: December-March
+- Key varieties: Bawku Red, Texas Early Grano, Prema, Red Creole
+- Maturity: 3-5 months
+- Expected yield: 10-20 t/ha
+
+=== Pepper (Capsicum spp.) ===
+- Growing regions: Central, Greater Accra, Volta, Ashanti
+- Planting season: Year-round with irrigation
+- Maturity: 60-90 days after transplanting
+- Varieties: Scotch Bonnet, Kpakpo Shito, Bird Pepper, Cayenne, Bell pepper
+- Expected yield: 8-12 t/ha (chili), 15-25 t/ha (bell pepper)
+
+=== Plantain (Musa paradisiaca) ===
+- Growing regions: Ashanti, Central, Eastern, Western, Volta
+- Planting season: March-June
+- Harvest: 8-12 months after planting
+- Key varieties: Apenkwa (Apantu), Oniaba, Corne 1
+- Spacing: 3m x 2m
+- Expected yield: 8-15 t/ha
+
+=== Okro (Abelmoschus esculentus) ===
+- Growing regions: All regions, especially Northern, Upper East, Greater Accra
+- Planting season: March-August
+- Maturity: 50-70 days
+- Expected yield: 5-8 t/ha
+
+=== Pepper, Eggplant, Cabbage, Lettuce ===
+- Grown in all regions, especially peri-urban areas near Accra, Kumasi, Takoradi
+- Dry season production uses irrigation from dams and shallow wells
+
+== LEGUMES ==
+
+=== Groundnut (Arachis hypogaea) ===
+- Growing regions: Northern, Upper East, Upper West, Brong-Ahafo
+- Planting season: April-July (early-mid rains)
+- Harvest: 3-4 months after planting (August-October)
+- Varieties: Chinese, Manipintar, F-mix, Obolo, Adepa
+- Expected yield: 1.0-2.5 t/ha (unshelled)
+
+=== Cowpea (Vigna unguiculata) ===
+- Growing regions: Northern, Upper East, Upper West, Brong-Ahafo
+- Planting season: June-August (relay cropping after cereals)
+- Harvest: September-October
+- Varieties: Asontem, Soronko, Hewale, Tona
+- Maturity: 70-90 days
+- Expected yield: 0.8-1.5 t/ha
+
+=== Soybean (Glycine max) ===
+- Growing regions: Northern, Brong-Ahafo, Ashanti
+- Planting season: June-August
+- Harvest: October-November
+- Varieties: Jenguma, Salintuy, Anidaso
+- Maturity: 95-115 days
+
+=== Bambara Groundnut (Vigna subterranea) ===
+- Grown in Northern, Upper East, Upper West regions
+- Very drought-tolerant
+- Planted May-July, harvested October-December
+
+== INTERCROPPING SYSTEMS ==
+Common traditional intercropping patterns:
+- Maize + Cassava + Plantain (forest zone)
+- Yam + Maize + Vegetables (transition zone)
+- Millet/Sorghum + Groundnut/Cowpea (savanna zone)
+- Cocoa + Plantain/Cocoyam (young cocoa farms)
+
+== LIVESTOCK INTEGRATION ==
+- Small ruminants (sheep, goats) are common in northern regions
+- Poultry production is widespread (mostly local breeds)
+- Cattle are mainly in the Northern, Upper East, Upper West regions
+- Pig production is minimal due to religious/cultural factors

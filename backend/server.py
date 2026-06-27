@@ -1,5 +1,5 @@
 """
-AgriBridge Ghana API Server.
+FarmDesk API Server.
 FastAPI backend for a Ghana agriculture and food systems assistant.
 """
 
@@ -20,8 +20,15 @@ try:
 except ImportError:
     from agri_prompt import SYSTEM_PROMPT
 
+try:
+    from .knowledge import vector_store
+    from .knowledge.loader import load_all
+except ImportError:
+    from knowledge import vector_store
+    from knowledge.loader import load_all
+
 # Load .env from the project root (one level up)
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env"))
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
 
 # ============================================================================
 # SESSION STORAGE (in-memory)
@@ -98,17 +105,28 @@ def sanitize_reply(text: str) -> str:
 # FASTAPI APP
 # ============================================================================
 
+_knowledge_loaded: bool = False
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup/shutdown events."""
-    print("AgriBridge Ghana API starting...")
+    global _knowledge_loaded
+    print("FarmDesk API starting...")
     print(f"   Model: {get_model()}")
+    try:
+        n = load_all()
+        _knowledge_loaded = n > 0
+        print(f"   Knowledge base: {n} chunks loaded")
+    except Exception as e:
+        _knowledge_loaded = False
+        print(f"   Knowledge base: failed to load ({e})")
     yield
-    print("AgriBridge Ghana API shutting down.")
+    print("FarmDesk API shutting down.")
 
 
 app = FastAPI(
-    title="AgriBridge Ghana API",
+    title="FarmDesk API",
     description="Agriculture and food systems assistant for Ghana",
     version="1.0.0",
     lifespan=lifespan,
@@ -150,6 +168,17 @@ class HealthResponse(BaseModel):
     active_sessions: int
 
 
+def retrieve_context(query_text: str) -> str:
+    """Query the knowledge base and format relevant chunks as context."""
+    try:
+        chunks = vector_store.query(query_text, n_results=3)
+        if not chunks:
+            return ""
+        return "\n\n".join(chunks)
+    except Exception:
+        return ""
+
+
 def apply_client_history(messages: list[dict], history: list[dict[str, str]] | None) -> None:
     """Restore context from the web client's saved local history when needed."""
     if len(messages) > 1 or not history:
@@ -179,13 +208,19 @@ async def health_check():
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
-    """Send a message and get a response from AgriBridge Ghana."""
+    """Send a message and get a response from FarmDesk."""
     if not request.message.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty")
 
     # Get or create session
     session_id, messages = get_or_create_session(request.session_id)
     apply_client_history(messages, request.history)
+
+    # Retrieve RAG context
+    context = retrieve_context(request.message)
+    if context:
+        rag_message = {"role": "system", "content": f"Here is relevant information from the knowledge base:\n{context}"}
+        messages.append(rag_message)
 
     # Add user message
     messages.append({"role": "user", "content": request.message})
@@ -219,12 +254,17 @@ async def chat(request: ChatRequest):
 
 @app.post("/api/chat/stream")
 async def stream_chat(request: ChatRequest):
-    """Send a message and stream AgriBridge Ghana's response as plain text chunks."""
+    """Send a message and stream FarmDesk's response as plain text chunks."""
     if not request.message.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty")
 
     session_id, messages = get_or_create_session(request.session_id)
     apply_client_history(messages, request.history)
+
+    context = retrieve_context(request.message)
+    if context:
+        messages.append({"role": "system", "content": f"Here is relevant information from the knowledge base:\n{context}"})
+
     messages.append({"role": "user", "content": request.message})
 
     def generate():
@@ -268,7 +308,7 @@ async def stream_chat(request: ChatRequest):
             messages.append({"role": "assistant", "content": cleaned})
         except Exception as e:
             messages.pop()
-            yield f"\n\n[AgriBridge Ghana stream error: {str(e)}]"
+            yield f"\n\n[FarmDesk stream error: {str(e)}]"
 
     return StreamingResponse(
         generate(),

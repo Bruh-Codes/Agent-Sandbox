@@ -1,11 +1,12 @@
 # Python
 __pycache__/
 *.py[oc]
+backend/knowledge/chroma_db/
 build/
 dist/
 wheels/
 *.egg-info
-.venv/
+backend/.venv/
 
 # Environment
 .env

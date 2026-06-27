@@ -1,0 +1,126 @@
+Ghana Climate and Agro-Ecological Zones
+
+== OVERVIEW ==
+Ghana lies between latitudes 4°N-12°N and longitudes 1.5°E-3.5°W. Tropical climate modulated by the Intertropical Discontinuity (ITD), which drives distinct wet and dry seasons.
+
+== AGRO-ECOLOGICAL ZONES (Updated 2023 Classification) ==
+A 2023 PLOS Climate study by Yamba et al. reclassified Ghana's traditional 4 zones into 5 zones reflecting climate change:
+
+1. SUDAN SAVANNA ZONE (newly delineated)
+   - Location: Upper East Region, parts of Upper West
+   - Rainfall: Unimodal, 600-900 mm/year
+   - Growing season: 90-120 days (May-September)
+   - Temperature: 28-34°C
+   - Vegetation: Short grasses, drought-resistant shrubs
+   - Major crops: Millet, sorghum, groundnut, cowpea
+
+2. GUINEA SAVANNA ZONE (expanded southward)
+   - Location: Northern, Savannah, North East, Upper West, parts of Bono
+   - Rainfall: Unimodal, 900-1200 mm/year (April-October)
+   - Growing season: 120-150 days
+   - Temperature: 26-32°C
+   - Note: Has expanded southward, engulfing parts of the former transition zone
+   - Major crops: Maize, rice, yam, groundnut, cowpea, sorghum, millet
+
+3. TRANSITION ZONE (shrunk in size)
+   - Location: Bono, Bono East, Ahafo, parts of Ashanti
+   - Rainfall: Bimodal transitioning to unimodal, 1200-1400 mm/year
+   - Major rains: April-July, Minor rains: September-October
+   - Growing season: 150-200 days
+   - Temperature: 25-30°C
+   - Note: Zone has shriveled as Guinea Savannah moves south
+   - Major crops: Maize, yam, cassava, cashew, tobacco
+
+4. FOREST ZONE (shifted northwest)
+   - Location: Western, Western North, Ashanti, Eastern, Central
+   - Rainfall: Bimodal, 1400-1750 mm/year
+   - Major rains: March-July, Minor rains: September-November
+   - Growing season: Year-round
+   - Temperature: 24-28°C
+   - Humidity: 80-90% mornings, <80% afternoons
+   - Vegetation: Semi-deciduous and evergreen forest
+   - Note: Zone has shrunk with northwest shift
+   - Major crops: Cocoa, oil palm, plantain, cocoyam, coffee, rubber
+
+5. COASTAL ZONE (expanded along entire coast)
+   - Location: Greater Accra, Central coast, Volta coast, Western coast
+   - Rainfall: Bimodal, 600-900 mm/year (driest zone)
+   - Major rains: March-July, Minor rains: August-October
+   - Temperature: 25-32°C
+   - Vegetation: Coastal savanna with short grasses, scattered palm trees
+   - Note: Expanded to encompass all of Ghana's coast
+   - Major crops: Vegetables (tomato, pepper, onion), cassava, rice
+
+== RAINFALL PATTERNS ==
+Southern Ghana: Bimodal rainfall pattern
+- Major rainy season: March-July
+- Minor rainy season: September-November
+- Dry season: December-February (Harmattan, cool and dusty)
+
+Northern Ghana: Unimodal rainfall pattern
+- Rainy season: May-October
+- Dry season: November-April (long, hot, dusty)
+
+Onset of rains:
+- Southern Ghana: March-April
+- Middle Belt: April-May
+- Northern Ghana: May-June
+
+== TEMPERATURE ==
+- Average annual: 26-29°C
+- Peak temperatures: March (hottest month)
+- Lowest temperatures: August (coolest month)
+- Projected increase: +1.5°C by end of century (RCP 4.5 scenario), reaching ~29.3°C average
+
+== CLIMATE CHANGE TRENDS (GMet Ghana Climate Atlas) ==
+1. Rising temperatures year-round, most increase during dry season
+2. Total annual rainfall expected to increase ~1.8% but with greater variability
+3. Seasonal shifts: AMJ (April-June) expected to decline 1.7%
+   JAS (July-September) expected to increase 13.9%
+   SON (September-November) expected to increase 3.6%
+4. Sea level rise: 0.4-0.7m along Ghana's coastline
+5. More extreme events: Floods, droughts, wildfires, coastal erosion
+
+== DROUGHT FREQUENCY ==
+- Northern Region: 3-4 events per decade
+- Middle Belt: 2-3 events per decade
+- Coastal Zone: 1-2 events per decade
+- Severity classifications: Mild (15-30% below avg), Moderate (30-50%), Severe (>50%)
+
+== CONSECUTIVE DRY DAYS ==
+- Northern Ghana: 50-120 days
+- Middle Belt: 30-60 days
+- Coastal Areas: 20-45 days
+- Peak dry period: December-February
+
+== WET DAYS ==
+- Coastal Zone: 80-100 wet days/year
+- Forest Zone: 110-150 wet days/year
+- Savannah Zone: 70-90 wet days/year
+- Peak months: June-July (15-20 wet days per month)
+
+== WIND PATTERNS ==
+- Wet season: Moist Southwesterly winds
+- Dry season: Dry, dusty Northeasterly winds (Harmattan, December-February)
+
+== 2025 SEASONAL FORECAST (GMet) ==
+Major season (Southern Ghana):
+- Early onset of rainfall predicted
+- High cumulative rainfall amounts
+- Early cessation of rains
+- Long dry spells between rain events
+- Result: Significant shifts from known standard cropping calendars (by weeks in some districts)
+
+2025 actual observations (FAO GIEWS, August 2025):
+- Mixed performance across regions
+- Brong-Ahafo and Ashanti: Dry spells in July affected crops
+- Upper West and Northern: Dry spells affected planting and crop establishment
+- Northern areas showed poor vegetation conditions as of end July 2025
+- September forecast: Below-average rainfall expected in most regions
+
+== AGRO-METEOROLOGICAL ADVISORIES ==
+MoFA and GMet collaboration (under FSRP) produces:
+- District-specific cropping calendars
+- Real-time weather advisories
+- Customized for 2025 major season deviations
+- 20 automated weather stations installed for accurate location-specific forecasts

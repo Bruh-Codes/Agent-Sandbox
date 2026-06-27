@@ -1,0 +1,134 @@
+Ghana Soil Types and Fertilizer Recommendations
+
+== GHANA SOIL CLASSIFICATION ==
+Ghana's soils have been extensively mapped by the CSIR-Soil Research Institute (CSIR-SRI). The major soil types by agro-ecological zone:
+
+=== Forest Zone (Western, Western North, Ashanti, Eastern, Central) ===
+- Dominant soils: Ochrosols and Oxysols (Forest Ochrosols, Rubrisols)
+- Characteristics: Well-drained, moderate to high organic matter (2-4%), reddish-brown
+- pH range: 4.5-5.8 (acidic) - recent 2025 digital soil mapping confirms pH <5.5 in many forest areas
+- Limitations: Low available phosphorus, acidic conditions can limit productivity
+- Organic carbon: 1.5-3.0% (relatively higher than other zones)
+
+=== Forest-Savannah Transition Zone (Bono, Bono East, Ahafo, parts of Ashanti) ===
+- Dominant soils: Forest-savanna mosaic soils, Lixisols
+- Characteristics: Moderately fertile, sandy loams over clay subsoils
+- pH range: 5.5-6.8
+- Organic matter: 1.0-2.0%
+- Limitations: Susceptible to compaction, moderate erosion risk
+
+=== Guinea Savannah Zone (Northern, Savannah, North East, parts of Bono) ===
+- Dominant soils: Plinthosols, Lixisols, Luvisols
+- Characteristics: Sandy loams and loamy sands, low organic matter (<1.5%)
+- pH range: 5.8-7.0 (less acidic than forest zone)
+- Limitations: Low nitrogen, prone to erosion, low water-holding capacity
+- Potassium levels: Generally adequate, with higher levels in upper northern areas
+
+=== Sudan Savannah Zone (Upper East, Upper West) ===
+- Dominant soils: Leptosols, Fluvisols, Vertisols
+- Characteristics: Shallow soils on rock outcrops, sandy
+- pH range: 6.0-7.2
+- Organic matter: Very low (<1%)
+- Limitations: Very low fertility, drought-prone, erosion risk
+
+=== Coastal Savannah Zone (Greater Accra, parts of Central and Volta) ===
+- Dominant soils: Sandy loams and clays, Acrisols, Gleysols
+- Characteristics: Low organic matter (<1%), well-drained
+- pH range: 5.0-6.5
+- Limitations: Low organic matter, salinity in low-lying areas
+
+=== Volta Region (incl. Oti) ===
+- Varied soils: Acrisols, Nitisols, Leptosols (hilly terrain)
+- pH: 5.0-6.5
+- Note: High rainfall leads to leaching, limiting fertility
+
+== NATIONAL SOIL FERTILITY STATUS (2025 Digital Soil Mapping) ==
+Key findings from the 2025 Geoderma study on Ghana's digital soil mapping:
+- Nitrogen levels decrease progressively from southern to northern Ghana
+- Most soils are nitrogen-deficient (below maize critical range of 400-1500 ppm)
+- Phosphorus is below maize critical threshold of 11 ppm in most areas
+- Potassium is generally adequate (within 17-74 ppm), exceeding 74 ppm in upper northern areas
+- Ghanaian soils are predominantly sandy
+- Forest and coastal savanna zones show pH below 5.5 (acidity)
+
+== FERTILIZER RECOMMENDATIONS ==
+
+The CSIR-Soil Research Institute (CSIR-SRI) conducted validation trials across 17 districts in Brong-Ahafo and 15 districts in Northern regions (1,650 farmers) to develop zone-specific recommendations.
+
+=== Maize Fertilizer Recommendations ===
+
+Forest-Savannah Transition Zone:
+- NPK recommendation: 90-60-60 (N-P2O5-K2O) + 1.7 kg Zn per hectare
+- Recommended blends: 8 bags/ha NPK 15-20-20 + 0.7% Zn + 2 bags/ha urea
+- Equivalent: 6 bags/ha 15-20-20 blend + 2 bags/ha urea (per CSIR-SRI validation)
+
+Guinea Savannah Zone:
+- NPK recommendation: 100-40-40 (N-P2O5-K2O) per hectare
+- Recommended blends: 4 bags/ha NPK 15-20-20 + 2 bags/ha urea
+- Old blanket recommendation (still used): 2 bags 15-15-15 + 1 bag sulfate of ammonia per acre
+- Split application: Apply all P and K at planting; apply N in 2 splits (50% at planting, 50% at 4-5 weeks)
+
+=== Cassava Fertilizer Recommendations ===
+
+Forest-Savannah Transition / Guinea Savannah:
+- NPK recommendation: 100-30-30 (N-P2O5-K2O) per hectare
+- Recommended blends: 6 bags/ha NPK 17-10-10 + 2 bags/ha urea OR 4.5 bags/ha sulfate of ammonia
+- Apply 2-4 weeks after planting for best results
+- Note: Cassava is relatively tolerant of low fertility but responds well to K application
+
+=== Rice Fertilizer Recommendations ===
+
+Lowland Rice (Guinea Savannah and Transition):
+- NPK recommendation: 90-60-60 (N-P2O5-K2O) per hectare
+- Recommended blends: 6 bags/ha NPK 15-20-20 + 2 bags/ha urea OR 4 bags/ha SoA
+
+Upland Rice (Guinea Savannah and Transition):
+- NPK recommendation: 90-40-40 (N-P2O5-K2O) per hectare
+- Recommended blends: 4 bags/ha NPK 15-20-20 + 3 bags/ha urea OR 6 bags/ha SoA
+- Split N application: 50% at planting, 50% at tillering (30-35 DAP)
+
+=== Soybean Fertilizer Recommendations ===
+
+All Ecologies:
+- NPK recommendation: 20-60-30 + 0.8 kg Zn per hectare
+- Recommended blends: 4 bags/ha NPK 12-30-17 + 0.4% Zn
+- Note: Soybean fixes its own N through rhizobium; P is the most critical nutrient
+- Rhizobium inoculant recommended at planting for improved nitrogen fixation
+
+=== Cocoa Fertilizer ===
+- Recommended: NPK 0-22-18 + 9CaO + 7MgO at 300 kg/ha annually
+- Applied April-June (early rains) for main crop
+- Under CODAPEC/Hi-TECH: NPK + Zinc applied April-June
+- Cocoa requires relatively low N but high K and Mg due to pod production
+- Annual nutrient removal by 1 ton of dry cocoa beans: approximately 20 kg N, 3 kg P, 25 kg K
+
+=== Tomato and Vegetables ===
+- NPK 15-15-15 at 200-300 kg/ha at transplanting
+- Top-dress with urea or NPK 15-15-15 3-4 weeks after transplanting
+- Supplemental calcium to prevent blossom-end rot
+
+=== Groundnut ===
+- Low N requirement (legume), but responds to P and K
+- Recommended: 200 kg/ha single superphosphate (SSP)
+- Note: Avoid N fertilizers as they reduce nodulation
+
+== INTEGRATED SOIL FERTILITY MANAGEMENT (ISFM) ==
+MoFA and CSIR-SRI recommend ISFM approach combining:
+1. Mineral fertilizers (site-specific blends)
+2. Organic inputs (compost, manure at 5-10 t/ha)
+3. Improved germplasm (high-yielding, nutrient-efficient varieties)
+4. Legume-based rotations and intercropping
+5. Minimum tillage and residue retention
+
+== FERTILIZER SUBSIDY HISTORY ==
+- 2008: Government introduced 50% fertilizer subsidy via voucher system
+- 2017-2022: Under PFJ Phase I, seeds subsidized 50%, fertilizers 50%
+- 2023: Subsidies suspended during PFJ review; transition to PFJ 2.0 input credit system
+- PFJ 2.0 (2023-present): Shift from direct subsidy to smart input credit linked to market arrangements
+
+== CHALLENGES ==
+- Only ~20% of farmers use fertilizers (MoFA, 2017 baseline)
+- Blanket recommendations still widely used despite zone-specific alternatives
+- Lack of effective soil testing services for farmers
+- High fertilizer costs due to import dependence and cedi depreciation
+- Soil acidity increasing in forest zones due to continuous cropping without liming
