@@ -33,6 +33,8 @@ const SignUpPage = () => {
 		if (error) {
 			toast.error(error.message ?? "Failed to create account");
 			setIsLoading(false);
+		} else {
+			window.location.href = "/";
 		}
 	};
 

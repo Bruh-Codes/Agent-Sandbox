@@ -32,6 +32,8 @@ const SignInPage = () => {
 		if (error) {
 			toast.error(error.message ?? "Failed to sign in");
 			setIsLoading(false);
+		} else {
+			window.location.href = "/";
 		}
 	};
 
