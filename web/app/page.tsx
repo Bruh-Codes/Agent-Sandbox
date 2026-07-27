@@ -9,7 +9,9 @@ export default function Page() {
       <SessionGuard>
         <Suspense>
           <MyProvider>
-            <Base />
+            <div className="h-full min-h-0">
+              <Base />
+            </div>
           </MyProvider>
         </Suspense>
       </SessionGuard>

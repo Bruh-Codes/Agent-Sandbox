@@ -216,7 +216,7 @@ const Header: FC = () => {
 };
 
 // Startup exposes a loading placeholder thread; treat it as a new chat so
-// the composer mounts centered. Loads after startup keep the docked layout.
+// the welcome + docked composer show. Loads after startup keep the docked layout.
 const isNewChatView = (s: AssistantState) =>
 	s.thread.messages.length === 0 &&
 	(!s.thread.isLoading || s.threads.isLoading);
@@ -225,7 +225,6 @@ const isThreadLoading = (s: AssistantState) =>
 	s.thread.isLoading && !s.threads.isLoading;
 
 const Thread: FC = () => {
-	const isEmpty = useAuiState(isNewChatView);
 	const loading = useAuiState(isThreadLoading);
 
 	return (
@@ -242,13 +241,12 @@ const Thread: FC = () => {
 			<ThreadPrimitive.Viewport
 				turnAnchor="top"
 				data-slot="aui_thread-viewport"
-			className={cn(
-				"relative flex min-h-0 flex-1 flex-col overflow-x-auto overflow-y-scroll scroll-smooth scrollbar-thin px-4 pt-4",
-				isEmpty && "justify-center",
-			)}
+				className="relative flex min-h-0 flex-1 flex-col overflow-x-auto overflow-y-auto scroll-smooth scrollbar-thin px-4 pt-4"
 			>
 				<AuiIf condition={isNewChatView}>
-					<ThreadWelcome />
+					<div className="flex min-h-0 flex-1 flex-col justify-center">
+						<ThreadWelcome />
+					</div>
 				</AuiIf>
 
 				{loading ? (
@@ -271,10 +269,7 @@ const Thread: FC = () => {
 						</div>
 
 						<ThreadPrimitive.ViewportFooter
-							className={cn(
-								"aui-thread-viewport-footer bg-background mx-auto flex w-full max-w-(--thread-max-width) flex-col gap-4 overflow-visible pb-4 md:pb-6",
-								!isEmpty && "sticky bottom-0 mt-auto rounded-t-(--composer-radius)",
-							)}
+							className="aui-thread-viewport-footer bg-background sticky bottom-0 mx-auto mt-auto flex w-full max-w-(--thread-max-width) flex-col gap-4 overflow-visible rounded-t-(--composer-radius) pb-4 md:pb-6"
 						>
 							<ThreadScrollToBottom />
 							<Composer />

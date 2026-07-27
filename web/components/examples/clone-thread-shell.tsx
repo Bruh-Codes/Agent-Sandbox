@@ -90,7 +90,10 @@ export const CloneThreadShell: FC<CloneThreadShellProps> = ({
 	}, []);
 
 	return (
-		<SidebarProvider defaultOpen={true}>
+		<SidebarProvider
+			defaultOpen={true}
+			className="h-full min-h-0 overflow-hidden"
+		>
 			<Sidebar collapsible="icon" className="bg-muted/30">
 				<SidebarHeaderInner>{headerContent}</SidebarHeaderInner>
 				<SidebarContent>
@@ -111,8 +114,8 @@ export const CloneThreadShell: FC<CloneThreadShellProps> = ({
 				</SidebarFooter>
 				<SidebarRail />
 			</Sidebar>
-			<SidebarInset className="overflow-hidden p-0">
-				<div className="flex h-full flex-col overflow-hidden">{children}</div>
+			<SidebarInset className="min-h-0 overflow-hidden p-0">
+				<div className="flex h-full min-h-0 flex-col overflow-hidden">{children}</div>
 			</SidebarInset>
 		</SidebarProvider>
 	);

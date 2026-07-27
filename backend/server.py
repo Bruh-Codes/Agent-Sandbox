@@ -117,6 +117,7 @@ def sanitize_reply(text: str) -> str:
     for line in lines:
         s = line.strip()
         if not s:
+            out_lines.append("")
             continue
         # skip separator-only lines like |---|---|
         if re.fullmatch(r"\|?\s*-{2,}\s*(\|\s*-{2,}\s*)*\|?", s):
@@ -136,7 +137,7 @@ def sanitize_reply(text: str) -> str:
         out_lines.append(s)
 
     out = "\n".join(out_lines)
-    out = re.sub(r"\n{2,}", "\n", out)
+    out = re.sub(r"\n{3,}", "\n\n", out)
     return out.strip()
 
 
@@ -305,7 +306,7 @@ async def chat(chat_req: ChatRequest, request: Request):
             model=model,
             messages=messages,
             temperature=0.2,
-            max_tokens=200,
+            max_tokens=600,
         )
 
         reply = resp.choices[0].message.content or "I'm sorry, I couldn't generate a response."
@@ -395,7 +396,7 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
             kwargs = {
                 "model": model,
                 "messages": messages,
-                "max_tokens": 200,
+                "max_tokens": 600,
                 "stream": True,
             }
             # Reasoning models (o-series) don't support temperature

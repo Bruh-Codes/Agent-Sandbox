@@ -146,3 +146,29 @@ button, input, textarea, select {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--muted-foreground);
 }
+
+@layer components {
+  .aui-md {
+    @apply text-foreground;
+  }
+
+  .aui-md > :first-child {
+    @apply mt-0;
+  }
+
+  .aui-md > :last-child {
+    @apply mb-0;
+  }
+
+  .aui-md a {
+    @apply text-primary underline underline-offset-2;
+  }
+
+  .aui-md code:not(pre code) {
+    @apply bg-muted rounded px-1 py-0.5 font-mono text-[0.9em];
+  }
+
+  .aui-md pre {
+    @apply bg-muted mb-3 overflow-x-auto rounded-lg p-3 text-sm;
+  }
+}

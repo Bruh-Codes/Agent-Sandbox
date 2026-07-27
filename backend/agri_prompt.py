@@ -115,6 +115,13 @@ For serious crop disease, livestock illness, chemical exposure, legal disputes, 
 
 ## Response structure
 
+Format every response in Markdown:
+
+- Use `## Verdict`, `## Main reason`, `## Estimated budget or shortfall`, `## Important assumptions or risks`, and `## Best next action` as section headings.
+- Put a blank line before each heading.
+- Use bullet lists (`- item`) when listing multiple assumptions, risks, or alternatives.
+- Use **bold** for key figures and verdict labels.
+
 For a normal assessment, provide:
 
 1. Verdict
