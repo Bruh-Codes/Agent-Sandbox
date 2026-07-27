@@ -16,6 +16,7 @@ import {
 } from "@/components/assistant-ui/tool-group";
 import { CloneThreadShell } from "./clone-thread-shell";
 import { useSidebar } from "@/components/ui/sidebar";
+import { Spinner } from "@/components/ui/spinner";
 import { TooltipIconButton } from "@/components/assistant-ui/tooltip-icon-button";
 import {
 	Reasoning,
@@ -53,32 +54,31 @@ import {
 import {
 	ArrowDownIcon,
 	ArrowUpIcon,
-	ChartColumnIcon,
+	BirdIcon,
+	BookOpenIcon,
 	CheckIcon,
 	ChevronLeftIcon,
 	ChevronRightIcon,
-	CloudSunIcon,
-	CodeXmlIcon,
 	CopyIcon,
 	DownloadIcon,
 	FileTextIcon,
+	GaugeIcon,
 	GlobeIcon,
 	HelpCircleIcon,
 	LanguagesIcon,
-	LeafIcon,
-	LightbulbIcon,
 	MenuIcon,
 	MicIcon,
 	MoonIcon,
 	MoreHorizontalIcon,
 	PanelLeftIcon,
 	PencilIcon,
-	PencilLineIcon,
 	RefreshCwIcon,
 	ShareIcon,
 	SlashIcon,
 	SquareIcon,
 	SunIcon,
+	TriangleAlertIcon,
+	WheatIcon,
 	WrenchIcon,
 } from "lucide-react";
 import {
@@ -96,6 +96,7 @@ import {
 import { ModelSelector } from "@/components/assistant-ui/model-selector";
 import { docsModelOptions } from "@/components/docs/assistant/docs-model-options";
 import { DEFAULT_MODEL_ID } from "@/constants/model";
+import { useTheme } from "next-themes";
 
 const Logo: FC = () => {
 	const { open } = useSidebar();
@@ -107,14 +108,27 @@ const Logo: FC = () => {
 				!open && "justify-center px-0!",
 			)}
 		>
-			<LeafIcon className="size-5 shrink-0 text-green-600" />
+			<svg
+				viewBox="0 0 32 32"
+				className="size-5 shrink-0"
+				aria-hidden="true"
+			>
+				<rect width="32" height="32" rx="8" fill="#00A63E" />
+				<path d="M9 10h14v12H9z" fill="#fff" opacity=".9" />
+				<path
+					d="M12 14h8M12 18h5"
+					stroke="#00A63E"
+					strokeWidth="2"
+					strokeLinecap="round"
+				/>
+			</svg>
 			<span
 				className={cn(
 					"text-foreground/90 truncate transition-all duration-200",
 					"group-data-[collapsible=icon]:max-w-0 group-data-[collapsible=icon]:overflow-hidden group-data-[collapsible=icon]:opacity-0",
 				)}
 			>
-				FarmDesk
+				FarmDesk<sup className="ms-0.5 text-[10px] font-normal text-muted-foreground">v3.0</sup>
 			</span>
 		</div>
 	);
@@ -147,23 +161,10 @@ const ThreadTitle: FC = () => {
 	);
 };
 
-function useTheme() {
-	const [dark, setDark] = useState(false);
-	useEffect(() => {
-		setDark(document.documentElement.classList.contains("dark"));
-	}, []);
-	const toggle = useCallback(() => {
-		const next = !document.documentElement.classList.contains("dark");
-		document.documentElement.classList.toggle("dark", next);
-		localStorage.setItem("theme", next ? "dark" : "light");
-		setDark(next);
-	}, []);
-	return { dark, toggle };
-}
-
 const Header: FC = () => {
 	const { openMobile, setOpenMobile, open, toggleSidebar } = useSidebar();
-	const { dark, toggle } = useTheme();
+
+	const { setTheme, theme } = useTheme();
 	return (
 		<header className="flex h-12 shrink-0 items-center gap-2 px-4">
 			<Button
@@ -189,12 +190,12 @@ const Header: FC = () => {
 			<TooltipIconButton
 				variant="ghost"
 				size="icon"
-				tooltip={dark ? "Light mode" : "Dark mode"}
+				tooltip={theme === "dark" ? "Light mode" : "Dark mode"}
 				side="bottom"
-				onClick={toggle}
+				onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
 				className="ml-auto size-8"
 			>
-				{dark ? (
+				{theme === "dark" ? (
 					<SunIcon className="size-4" />
 				) : (
 					<MoonIcon className="size-4" />
@@ -220,8 +221,12 @@ const isNewChatView = (s: AssistantState) =>
 	s.thread.messages.length === 0 &&
 	(!s.thread.isLoading || s.threads.isLoading);
 
+const isThreadLoading = (s: AssistantState) =>
+	s.thread.isLoading && !s.threads.isLoading;
+
 const Thread: FC = () => {
 	const isEmpty = useAuiState(isNewChatView);
+	const loading = useAuiState(isThreadLoading);
 
 	return (
 		<ThreadPrimitive.Root
@@ -246,35 +251,43 @@ const Thread: FC = () => {
 					<ThreadWelcome />
 				</AuiIf>
 
-				<div
-					data-slot="aui_message-group"
-					className="mb-14 flex flex-col gap-y-6 empty:hidden"
-				>
-					<ThreadPrimitive.Messages>
-						{({ message }) => {
-							if (message.composer.isEditing) return <EditComposer />;
-							if (message.role === "user") return <UserMessage />;
-							return <AssistantMessage />;
-						}}
-					</ThreadPrimitive.Messages>
-				</div>
-
-				<ThreadPrimitive.ViewportFooter
-					className={cn(
-						"aui-thread-viewport-footer bg-background mx-auto flex w-full max-w-(--thread-max-width) flex-col gap-4 overflow-visible pb-4 md:pb-6",
-						!isEmpty && "sticky bottom-0 mt-auto rounded-t-(--composer-radius)",
-					)}
-				>
-					<ThreadScrollToBottom />
-					<Composer />
-					<AuiIf condition={isNewChatView}>
-						<div className="aui-thread-welcome-suggestions-shell min-h-19">
-							<AuiIf condition={(s) => s.composer.isEmpty}>
-								<ThreadSuggestions />
-							</AuiIf>
+				{loading ? (
+					<div className="flex flex-1 items-center justify-center">
+						<Spinner className="size-8" />
+					</div>
+				) : (
+					<>
+						<div
+							data-slot="aui_message-group"
+							className="mb-14 flex flex-col gap-y-6 empty:hidden"
+						>
+							<ThreadPrimitive.Messages>
+								{({ message }) => {
+									if (message.composer.isEditing) return <EditComposer />;
+									if (message.role === "user") return <UserMessage />;
+									return <AssistantMessage />;
+								}}
+							</ThreadPrimitive.Messages>
 						</div>
-					</AuiIf>
-				</ThreadPrimitive.ViewportFooter>
+
+						<ThreadPrimitive.ViewportFooter
+							className={cn(
+								"aui-thread-viewport-footer bg-background mx-auto flex w-full max-w-(--thread-max-width) flex-col gap-4 overflow-visible pb-4 md:pb-6",
+								!isEmpty && "sticky bottom-0 mt-auto rounded-t-(--composer-radius)",
+							)}
+						>
+							<ThreadScrollToBottom />
+							<Composer />
+							<AuiIf condition={isNewChatView}>
+								<div className="aui-thread-welcome-suggestions-shell min-h-19">
+									<AuiIf condition={(s) => s.composer.isEmpty}>
+										<ThreadSuggestions />
+									</AuiIf>
+								</div>
+							</AuiIf>
+						</ThreadPrimitive.ViewportFooter>
+					</>
+				)}
 			</ThreadPrimitive.Viewport>
 
 			<SelectionToolbar />
@@ -311,98 +324,104 @@ type SuggestionGroup = {
 	icon: ReactNode;
 	options: { label: string; prompt: string }[];
 };
-
 const SUGGESTION_GROUPS: SuggestionGroup[] = [
 	{
-		label: "Weather",
-		icon: <CloudSunIcon />,
+		label: "Quick Assess",
+		icon: <GaugeIcon />,
 		options: [
 			{
-				label: "in San Francisco",
-				prompt: "What's the weather in San Francisco?",
-			},
-			{ label: "in Singapore", prompt: "What's the weather in Singapore?" },
-			{ label: "in Tokyo", prompt: "What's the weather in Tokyo?" },
-			{ label: "in London", prompt: "What's the weather in London?" },
-		],
-	},
-	{
-		label: "Code",
-		icon: <CodeXmlIcon />,
-		options: [
-			{
-				label: "explain React hooks",
-				prompt: "Explain React hooks like useState and useEffect",
+				label: "GHS 5,000 in Accra",
+				prompt:
+					"I have GHS 5,000 and I'm in Accra. What farming can I do?",
 			},
 			{
-				label: "write a debounce function",
-				prompt: "Write a debounce function in TypeScript",
+				label: "GHS 50,000 in Kumasi",
+				prompt:
+					"I have GHS 50,000 in Kumasi. Which agribusiness works best?",
 			},
 			{
-				label: "review a useEffect cleanup",
-				prompt: "Show me the right way to clean up a subscription in useEffect",
+				label: "GHS 200,000 in Tamale",
+				prompt:
+					"I have GHS 200,000 in Tamale. What should I invest in?",
 			},
 		],
 	},
 	{
-		label: "Write",
-		icon: <PencilLineIcon />,
+		label: "Livestock",
+		icon: <BirdIcon />,
 		options: [
 			{
-				label: "a birthday card message",
+				label: "Poultry farming",
 				prompt:
-					"Help me write a birthday card message for a friend in the notepad",
+					"I want to start poultry farming. What capital and location do I need?",
 			},
 			{
-				label: "a product announcement",
-				prompt: "Draft a short product announcement for a new dark mode",
+				label: "Piggery",
+				prompt: "I'm considering pig farming. Is it profitable in Ghana?",
 			},
 			{
-				label: "release notes",
-				prompt:
-					"Write release notes for a bugfix release of a React component library",
-			},
-			{
-				label: "a PR description",
-				prompt:
-					"Write a pull request description for a change that adds keyboard shortcuts",
+				label: "Catfish",
+				prompt: "I want to do fish farming. How much capital do I need?",
 			},
 		],
 	},
 	{
-		label: "Analyze",
-		icon: <ChartColumnIcon />,
+		label: "Crops",
+		icon: <WheatIcon />,
 		options: [
 			{
-				label: "React vs Vue vs Svelte",
-				prompt: "Compare React, Vue, and Svelte in a table",
+				label: "Maize on 5 acres",
+				prompt: "How profitable is maize farming on 5 acres in Ghana?",
 			},
 			{
-				label: "GDP of US, China, Japan",
+				label: "Vegetables",
+				prompt: "What vegetables grow best in the Eastern Region?",
+			},
+			{
+				label: "Pineapple export",
 				prompt:
-					"Compare the GDP of the United States, China, and Japan in a table",
-			},
-			{
-				label: "pros and cons of SSR",
-				prompt: "What are the pros and cons of server-side rendering?",
+					"How do I start pineapple farming for export?",
 			},
 		],
 	},
 	{
-		label: "Brainstorm",
-		icon: <LightbulbIcon />,
+		label: "Know-How",
+		icon: <BookOpenIcon />,
 		options: [
 			{
-				label: "side project ideas",
-				prompt: "Brainstorm five side project ideas for a React developer",
+				label: "Best planting seasons",
+				prompt:
+					"What are the best planting seasons for maize in Ghana?",
 			},
 			{
-				label: "names for a dev tool",
-				prompt: "Brainstorm names for a developer tools startup",
+				label: "Land prep cost",
+				prompt:
+					"How much does it cost to prepare 1 acre of land for farming?",
 			},
 			{
-				label: "talk topics",
-				prompt: "Brainstorm talk topics for a React meetup",
+				label: "Where to sell",
+				prompt: "Where can I sell my produce in Ashanti Region?",
+			},
+		],
+	},
+	{
+		label: "Reality Check",
+		icon: <TriangleAlertIcon />,
+		options: [
+			{
+				label: "East Legon farming?",
+				prompt:
+					"Can I do any real farming on a small plot in East Legon?",
+			},
+			{
+				label: "GHS 2,000 budget",
+				prompt:
+					"I have GHS 2,000. Is there any farming I can start?",
+			},
+			{
+				label: "Borrowed land",
+				prompt:
+					"Can I start farming on borrowed land with low capital?",
 			},
 		],
 	},

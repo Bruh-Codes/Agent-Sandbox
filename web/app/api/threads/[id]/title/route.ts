@@ -20,27 +20,43 @@ export async function POST(
     .where(and(eq(threads.id, id), eq(threads.userId, session.user.id)));
   if (!thread) return new Response(null, { status: 404 });
 
-  const { messages } = (await req.json()) as { messages: any[] };
+  let title = "Chat";
 
-  const result = streamText({
-    model: openai("gpt-4.1-mini"),
-    system:
-      "You are a helpful assistant that generates a short, concise title (max 6 words) for a conversation. Return only the title, no quotes or extra text.",
-    messages: messages.slice(0, 2).map((m: any) => ({
-      role: m.role,
-      content: m.content
-        .filter((p: any) => p.type === "text")
-        .map((p: any) => p.text)
-        .join(" "),
-    })),
-  });
+  try {
+    const { messages } = (await req.json()) as { messages: any[] };
 
-  let title = "";
-  for await (const chunk of result.textStream) {
-    title += chunk;
+    function extractText(m: any): string {
+      const parts = m.parts ?? m.content;
+      if (Array.isArray(parts)) {
+        return parts
+          .filter((p: any) => p.type === "text")
+          .map((p: any) => p.text)
+          .filter(Boolean)
+          .join(" ");
+      }
+      if (typeof m.content === "string") return m.content;
+      return "";
+    }
+
+    const result = streamText({
+      model: openai("gpt-4.1-mini"),
+      system:
+        "You are a helpful assistant that generates a short, concise title (max 6 words) for a conversation. Return only the title, no quotes or extra text.",
+      messages: messages.slice(0, 2).map((m: any) => ({
+        role: m.role,
+        content: extractText(m),
+      })),
+    });
+
+    title = "";
+    for await (const chunk of result.textStream) {
+      title += chunk;
+    }
+
+    title = title.trim().replace(/^["']|["']$/g, "");
+  } catch {
+    title = "Chat";
   }
-
-  title = title.trim().replace(/^["']|["']$/g, "");
 
   await db
     .update(threads)

@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import { extractText, toBackendHistory } from "@/lib/chat-utils";
 import {
 	createUIMessageStream,
 	createUIMessageStreamResponse,
@@ -7,34 +8,8 @@ import { headers } from "next/headers";
 
 export const maxDuration = 30;
 
-function extractText(msg: any): string {
-	if (typeof msg.content === "string") return msg.content;
-	if (Array.isArray(msg.content)) {
-		const parts = msg.content
-			.filter((p: any) => p.type === "text")
-			.map((p: any) => p.text)
-			.filter(Boolean);
-		if (parts.length > 0) return parts.join("\n");
-		const allText = msg.content.map((p: any) => p.text ?? "").join("");
-		if (allText) return allText;
-	}
-	if (msg.text) return msg.text;
-	return "";
-}
-
-function toBackendHistory(messages: any[], excludeLastUser: boolean): { role: string; content: string }[] {
-	const msgs = excludeLastUser ? messages.slice(0, -1) : messages;
-	return msgs
-		.filter((m: any) => m.role === "user" || m.role === "assistant")
-		.map((m: any) => ({
-			role: m.role,
-			content: extractText(m),
-		}))
-		.filter((m) => m.content.trim());
-}
-
 export async function POST(req: Request) {
-	const { messages } = await req.json();
+	const { messages, model } = await req.json();
 	const session = await auth.api.getSession({ headers: await headers() });
 	if (!session) return new Response("Unauthorized", { status: 401 });
 
@@ -62,6 +37,7 @@ export async function POST(req: Request) {
 						message: userText,
 						session_id: null,
 						history: history.length > 0 ? history : null,
+						model: model || undefined,
 					}),
 				});
 
@@ -87,16 +63,44 @@ export async function POST(req: Request) {
 					return;
 				}
 
+				const reasoningId = "resp-reasoning";
+				let hasReasoning = false;
 				const decoder = new TextDecoder();
+				let buffer = "";
+
 				while (true) {
 					const { done, value } = await reader.read();
 					if (done) break;
-					const chunk = decoder.decode(value, { stream: true });
-					if (chunk) {
-						writer.write({ type: "text-delta", id: textId, delta: chunk });
+					buffer += decoder.decode(value, { stream: true });
+					const lines = buffer.split("\n");
+					buffer = lines.pop() || "";
+
+					for (const line of lines) {
+						if (!line.trim()) continue;
+						try {
+							const { type, content } = JSON.parse(line);
+							if (type === "reasoning" && content) {
+								if (!hasReasoning) {
+									writer.write({ type: "reasoning-start", id: reasoningId });
+									hasReasoning = true;
+								}
+								writer.write({ type: "reasoning-delta", id: reasoningId, delta: content });
+							} else if (type === "text" && content) {
+								writer.write({ type: "text-delta", id: textId, delta: content });
+							} else if (type === "error") {
+								writer.write({ type: "text-delta", id: textId, delta: `[FarmDesk error: ${content}]` });
+							}
+						} catch {
+							if (line.trim()) {
+								writer.write({ type: "text-delta", id: textId, delta: line });
+							}
+						}
 					}
 				}
 
+				if (hasReasoning) {
+					writer.write({ type: "reasoning-end", id: reasoningId });
+				}
 				writer.write({ type: "text-end", id: textId });
 				writer.write({ type: "finish-step" });
 				writer.write({ type: "finish" });

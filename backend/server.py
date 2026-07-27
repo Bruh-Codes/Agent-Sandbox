@@ -3,6 +3,7 @@ FarmDesk API Server.
 FastAPI backend for a Ghana agriculture and food systems assistant.
 """
 
+import json
 import os
 import re
 import uuid
@@ -65,7 +66,7 @@ async def get_or_create_session(session_id: str | None) -> tuple[str, list[dict]
             return session_id, sessions[session_id]
 
     new_id = str(uuid.uuid4())
-    enhanced_prompt = SYSTEM_PROMPT + SECURITY_APPENDIX
+    enhanced_prompt = SYSTEM_PROMPT + "\n\n" + SECURITY_APPENDIX
     msgs = [{"role": "system", "content": enhanced_prompt}]
 
     if is_db_configured():
@@ -196,6 +197,7 @@ class ChatRequest(BaseModel):
     message: str
     session_id: str | None = None
     history: list[dict[str, str]] | None = None
+    model: str | None = None
 
 
 class ChatResponse(BaseModel):
@@ -297,13 +299,13 @@ async def chat(chat_req: ChatRequest, request: Request):
 
     try:
         client = get_client()
-        model = get_model()
+        model = chat_req.model or get_model()
 
         resp = client.chat.completions.create(
             model=model,
             messages=messages,
             temperature=0.2,
-            max_tokens=150,
+            max_tokens=300,
         )
 
         reply = resp.choices[0].message.content or "I'm sorry, I couldn't generate a response."
@@ -328,7 +330,11 @@ async def chat(chat_req: ChatRequest, request: Request):
 
 @app.post("/api/chat/stream")
 async def stream_chat(chat_req: ChatRequest, request: Request):
-    """Send a message and stream FarmDesk's response as plain text chunks."""
+    """Send a message and stream FarmDesk's response as JSON events.
+
+    Each line is a JSON object with {"type": str, "content": str}.
+    Types: "reasoning" (CoT tokens), "text" (final answer), "error".
+    """
     # --- Rate limiting (per IP) ---
     client_ip = request.client.host if request.client else "unknown"
     allowed, remaining = rate_limiter.check(client_ip)
@@ -355,7 +361,7 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
         )
 
         async def reject_stream():
-            yield rejection
+            yield json.dumps({"type": "text", "content": rejection}) + "\n"
 
         return StreamingResponse(
             reject_stream(),
@@ -384,24 +390,34 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
 
         try:
             client = get_async_client()
-            model = get_model()
+            model = chat_req.model or get_model()
 
-            stream = await client.chat.completions.create(
-                model=model,
-                messages=messages,
-                temperature=0.2,
-                max_tokens=150,
-                stream=True,
-            )
+            kwargs = {
+                "model": model,
+                "messages": messages,
+                "max_tokens": 300,
+                "stream": True,
+            }
+            # Reasoning models (o-series) don't support temperature
+            if not model.startswith("o"):
+                kwargs["temperature"] = 0.2
+
+            stream = await client.chat.completions.create(**kwargs)
 
             async for chunk in stream:
-                delta = chunk.choices[0].delta.content or ""
-                if not delta:
+                content = chunk.choices[0].delta.content or ""
+
+                # Emit reasoning tokens if present (o3-mini, o1, etc.)
+                reasoning = getattr(chunk.choices[0].delta, "reasoning_content", None) or ""
+                if reasoning:
+                    yield json.dumps({"type": "reasoning", "content": reasoning}) + "\n"
+
+                if not content:
                     continue
 
-                full_reply += delta
+                full_reply += content
 
-                cleaned = delta.replace("|", "-")
+                cleaned = content.replace("|", "-")
                 cleaned_lines = []
                 for ln in cleaned.splitlines():
                     if re.fullmatch(r"\s*-{2,}\s*", ln):
@@ -410,7 +426,7 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
                 cleaned_delta = "\n".join(cleaned_lines)
 
                 if cleaned_delta:
-                    yield cleaned_delta
+                    yield json.dumps({"type": "text", "content": cleaned_delta}) + "\n"
 
             cleaned = sanitize_reply(full_reply)
             messages.append({"role": "assistant", "content": cleaned})
@@ -418,7 +434,7 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
         except Exception as e:
             if len(messages) > 1:
                 messages.pop()
-            yield f"\n\n[FarmDesk stream error: {str(e)}]"
+            yield json.dumps({"type": "error", "content": str(e)}) + "\n"
 
     return StreamingResponse(
         generate(),

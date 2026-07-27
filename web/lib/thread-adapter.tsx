@@ -8,73 +8,47 @@ import {
 } from "@assistant-ui/react";
 import { createAssistantStream } from "assistant-stream";
 import { useMemo } from "react";
-
-async function apiJson<T>(url: string, init?: RequestInit): Promise<T | null> {
-  const res = await fetch(url, init);
-  if (!res.ok) return null;
-  return res.json();
-}
+import { threadsApi } from "@/lib/api/threads";
+import { messagesApi } from "@/lib/api/messages";
 
 export const threadListAdapter: RemoteThreadListAdapter = {
   async list() {
-    const rows: any[] | null = await apiJson("/api/threads");
-    if (!rows) return { threads: [] };
-    return {
-      threads: rows.map((t: any) => ({
-        remoteId: t.id,
-        title: t.title ?? undefined,
-        status: t.status,
-        lastMessageAt: t.updatedAt ? new Date(t.updatedAt) : undefined,
-      })),
-    };
+    return threadsApi.list();
   },
+
   async initialize() {
-    const data: { id?: string } | null = await apiJson("/api/threads", {
-      method: "POST",
-    });
-    if (!data?.id) return { remoteId: crypto.randomUUID() };
-    return { remoteId: data.id };
+    return threadsApi.create();
   },
+
   async rename(remoteId, title) {
-    await fetch(`/api/threads/${remoteId}`, {
-      method: "PATCH",
-      body: JSON.stringify({ title }),
-    });
+    await threadsApi.rename(remoteId, title);
   },
+
   async archive(remoteId) {
-    await fetch(`/api/threads/${remoteId}`, {
-      method: "PATCH",
-      body: JSON.stringify({ status: "archived" }),
-    });
+    await threadsApi.archive(remoteId);
   },
+
   async unarchive(remoteId) {
-    await fetch(`/api/threads/${remoteId}`, {
-      method: "PATCH",
-      body: JSON.stringify({ status: "regular" }),
-    });
+    await threadsApi.unarchive(remoteId);
   },
+
   async delete(remoteId) {
-    await fetch(`/api/threads/${remoteId}`, { method: "DELETE" });
+    await threadsApi.remove(remoteId);
   },
+
   async fetch(remoteId) {
-    const t: any | null = await apiJson(`/api/threads/${remoteId}`);
-    if (!t) return { remoteId, status: "regular" };
-    return {
-      remoteId: t.id,
-      title: t.title ?? undefined,
-      status: t.status,
-      lastMessageAt: t.updatedAt ? new Date(t.updatedAt) : undefined,
-    };
+    const thread = await threadsApi.get(remoteId);
+    if (!thread) return { remoteId, status: "regular" as const };
+    return thread;
   },
+
   async generateTitle(remoteId, messages) {
     return createAssistantStream(async (controller) => {
-      const data: { title?: string } | null = await apiJson(
-        `/api/threads/${remoteId}/title`,
-        { method: "POST", body: JSON.stringify({ messages }) },
-      );
-      controller.appendText(data?.title ?? "Chat");
+      const title = await threadsApi.generateTitle(remoteId, messages);
+      controller.appendText(title);
     });
   },
+
   unstable_Provider({ children }) {
     const aui = useAui();
     const history = useMemo<ThreadHistoryAdapter>(
@@ -87,31 +61,25 @@ export const threadListAdapter: RemoteThreadListAdapter = {
           async load() {
             const { remoteId } = aui.threadListItem().getState();
             if (!remoteId) return { messages: [] };
-            const rows: any[] | null = await apiJson(
-              `/api/threads/${remoteId}/messages`,
-            );
-            if (!rows) return { messages: [] };
+            const rows = await messagesApi.list(remoteId);
             return {
-              messages: rows.map((row: any) =>
+              messages: rows.map((row) =>
                 fmt.decode({
                   id: row.id,
-                  parent_id: row.parent_id,
+                  parent_id: row.parentId ?? null,
                   format: row.format,
-                  content: row.content,
+                  content: row.content as never,
                 }),
               ),
             };
           },
           async append(item) {
             const { remoteId } = await aui.threadListItem().initialize();
-            await fetch(`/api/threads/${remoteId}/messages`, {
-              method: "POST",
-              body: JSON.stringify({
-                id: fmt.getId(item.message),
-                parent_id: item.parentId,
-                format: fmt.format,
-                content: fmt.encode(item),
-              }),
+            await messagesApi.append(remoteId, {
+              id: fmt.getId(item.message),
+              parent_id: item.parentId,
+              format: fmt.format,
+              content: fmt.encode(item),
             });
           },
         }),

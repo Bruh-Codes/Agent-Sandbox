@@ -27,8 +27,7 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { auth } from "@/lib/auth";
-import { authClient } from "@/lib/auth-client";
+import { useSessionQuery } from "@/lib/queries/session";
 
 export function NavUser({
 	user,
@@ -41,7 +40,7 @@ export function NavUser({
 }) {
 	const { isMobile } = useSidebar();
 
-	const { data: session, isPending } = authClient.useSession();
+	const { data: session, isPending } = useSessionQuery();
 	const avatarUrl = user.avatar ?? session?.user?.image ?? undefined;
 	const name = session?.user?.name ?? user.name;
 	const email = session?.user?.email ?? user.email;

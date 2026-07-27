@@ -6,10 +6,20 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
+import { toast } from "sonner";
+import {
 	AuiIf,
 	ThreadListItemMorePrimitive,
 	ThreadListItemPrimitive,
 	ThreadListPrimitive,
+	useAui,
 	useAuiState,
 } from "@assistant-ui/react";
 import {
@@ -27,6 +37,7 @@ import {
 	type ComponentPropsWithoutRef,
 	type FC,
 } from "react";
+import { threadsApi } from "@/lib/api/threads";
 
 export const ThreadList: FC = () => {
 	const [search, setSearch] = useState("");
@@ -214,10 +225,9 @@ export const ThreadListNew = forwardRef<
 		<ThreadListPrimitive.New asChild>
 			<SidebarMenuButton
 				ref={ref}
-				variant="default"
 				data-slot="aui_thread-list-new"
 				className={cn(
-					"hover:bg-sidebar-accent data-active:bg-sidebar-accent h-8 justify-start gap-2 rounded-md px-2.5 text-sm font-normal",
+					"hover:bg-sidebar-accent! bg-transparent! data-active:bg-sidebar-accent h-8 justify-start gap-2 rounded-md px-2.5 text-sm font-normal",
 					"group-data-[collapsible=icon]:justify-center",
 					"group-data-[collapsible=icon]:px-0",
 					"group-data-[collapsible=icon]:gap-0",
@@ -294,45 +304,92 @@ export const ThreadListItem: FC = () => {
 };
 
 const ThreadListItemMore: FC = () => {
+	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+	const [deleting, setDeleting] = useState(false);
+	const aui = useAui();
+
+	async function handleDelete() {
+		setDeleting(true);
+		try {
+			const { remoteId } = aui.threadListItem().getState();
+			if (!remoteId) return;
+			await threadsApi.remove(remoteId);
+			setDeleteDialogOpen(false);
+			await aui.threads().switchToNewThread();
+			await aui.threads().reload();
+		} catch {
+			toast.error("Failed to delete thread");
+			setDeleting(false);
+		}
+	}
+
 	return (
-		<ThreadListItemMorePrimitive.Root sharedFocusGroup>
-			<ThreadListItemMorePrimitive.Trigger asChild>
-				<Button
-					variant="ghost"
-					size="icon"
-					data-slot="aui_thread-list-item-more"
-					className="data-[state=open]:bg-accent absolute end-1.5 top-1/2 size-6 -translate-y-1/2 p-0 opacity-0 group-hover:opacity-100 group-has-focus-visible:opacity-100 group-data-active:opacity-100 data-[state=open]:opacity-100"
-				>
-					<MoreHorizontalIcon className="size-3.5" />
-					<span className="sr-only">More options</span>
-				</Button>
-			</ThreadListItemMorePrimitive.Trigger>
-			<ThreadListItemMorePrimitive.Content
-				side="right"
-				align="start"
-				sideOffset={6}
-				data-slot="aui_thread-list-item-more-content"
-				className="bg-popover/95 text-popover-foreground data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:animate-in data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:animate-out data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-32 overflow-hidden rounded-xl border p-1.5 shadow-lg backdrop-blur-sm"
-			>
-				<ThreadListItemPrimitive.Archive asChild>
-					<ThreadListItemMorePrimitive.Item
-						data-slot="aui_thread-list-item-more-item"
-						className="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm outline-none select-none"
+		<>
+			<ThreadListItemMorePrimitive.Root sharedFocusGroup>
+				<ThreadListItemMorePrimitive.Trigger asChild>
+					<Button
+						variant="ghost"
+						size="icon"
+						data-slot="aui_thread-list-item-more"
+						className="data-[state=open]:bg-accent absolute end-1.5 top-1/2 size-6 -translate-y-1/2 p-0 opacity-0 group-hover:opacity-100 group-has-focus-visible:opacity-100 group-data-active:opacity-100 data-[state=open]:opacity-100"
 					>
-						<ArchiveIcon className="size-4" />
-						Archive
-					</ThreadListItemMorePrimitive.Item>
-				</ThreadListItemPrimitive.Archive>
-				<ThreadListItemPrimitive.Delete asChild>
+						<MoreHorizontalIcon className="size-3.5" />
+						<span className="sr-only">More options</span>
+					</Button>
+				</ThreadListItemMorePrimitive.Trigger>
+				<ThreadListItemMorePrimitive.Content
+					side="right"
+					align="start"
+					sideOffset={6}
+					data-slot="aui_thread-list-item-more-content"
+					className="bg-popover/95 text-popover-foreground data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:animate-in data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:animate-out data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-32 overflow-hidden rounded-xl border p-1.5 shadow-lg backdrop-blur-sm"
+				>
+					<ThreadListItemPrimitive.Archive asChild>
+						<ThreadListItemMorePrimitive.Item
+							data-slot="aui_thread-list-item-more-item"
+							className="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm outline-none select-none"
+						>
+							<ArchiveIcon className="size-4" />
+							Archive
+						</ThreadListItemMorePrimitive.Item>
+					</ThreadListItemPrimitive.Archive>
 					<ThreadListItemMorePrimitive.Item
 						data-slot="aui_thread-list-item-more-item"
 						className="text-destructive hover:bg-destructive/10 hover:text-destructive focus:bg-destructive/10 focus:text-destructive flex cursor-pointer items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm outline-none select-none"
+						onClick={() => setDeleteDialogOpen(true)}
 					>
 						<TrashIcon className="size-4" />
 						Delete
 					</ThreadListItemMorePrimitive.Item>
-				</ThreadListItemPrimitive.Delete>
-			</ThreadListItemMorePrimitive.Content>
-		</ThreadListItemMorePrimitive.Root>
+				</ThreadListItemMorePrimitive.Content>
+			</ThreadListItemMorePrimitive.Root>
+			<Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+				<DialogContent showCloseButton={false}>
+					<DialogHeader>
+						<DialogTitle>Delete thread</DialogTitle>
+						<DialogDescription>
+							Are you sure you want to delete this thread? This action cannot be
+							undone.
+						</DialogDescription>
+					</DialogHeader>
+					<DialogFooter>
+						<Button
+							variant="outline"
+							disabled={deleting}
+							onClick={() => setDeleteDialogOpen(false)}
+						>
+							Cancel
+						</Button>
+						<Button
+							variant="destructive"
+							disabled={deleting}
+							onClick={handleDelete}
+						>
+							{deleting ? "Deleting..." : "Delete"}
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+		</>
 	);
 };
