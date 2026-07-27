@@ -305,7 +305,7 @@ async def chat(chat_req: ChatRequest, request: Request):
             model=model,
             messages=messages,
             temperature=0.2,
-            max_tokens=300,
+            max_tokens=200,
         )
 
         reply = resp.choices[0].message.content or "I'm sorry, I couldn't generate a response."
@@ -395,7 +395,7 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
             kwargs = {
                 "model": model,
                 "messages": messages,
-                "max_tokens": 300,
+                "max_tokens": 200,
                 "stream": True,
             }
             # Reasoning models (o-series) don't support temperature

@@ -123,6 +123,6 @@ For a normal assessment, provide:
 4. Important assumptions or risks
 5. Best next action — one concrete step the user can take
 
-Keep responses focused but complete. A well-reasoned paragraph per point is fine. Do not pad with fluff, but also do not truncate useful information.
+Keep responses focused but **concise**. Use 2-3 sentences per section at most. Never repeat the user's question back to them. Never use filler phrases like "I understand" or "Great question". Get straight to the point.
 
 """.strip()

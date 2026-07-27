@@ -242,10 +242,10 @@ const Thread: FC = () => {
 			<ThreadPrimitive.Viewport
 				turnAnchor="top"
 				data-slot="aui_thread-viewport"
-				className={cn(
-					"relative flex flex-1 flex-col overflow-x-auto overflow-y-scroll scroll-smooth px-4 pt-4",
-					isEmpty && "justify-center",
-				)}
+			className={cn(
+				"relative flex min-h-0 flex-1 flex-col overflow-x-auto overflow-y-scroll scroll-smooth scrollbar-thin px-4 pt-4",
+				isEmpty && "justify-center",
+			)}
 			>
 				<AuiIf condition={isNewChatView}>
 					<ThreadWelcome />
@@ -706,7 +706,7 @@ const AssistantMessage: FC = () => {
 		>
 			<div
 				data-slot="aui_assistant-message-content"
-				className="text-foreground px-2 leading-relaxed wrap-break-word"
+				className="text-foreground space-y-3 px-4 leading-relaxed wrap-break-word"
 			>
 				<MessagePrimitive.GroupedParts
 					groupBy={groupPartByType({
@@ -937,9 +937,9 @@ export const Base: FC = () => {
 			wrapNewThreadTooltip
 		>
 			<div className="bg-muted/30 flex h-full flex-col overflow-hidden p-2 md:pl-0">
-				<div className="bg-background flex flex-1 flex-col overflow-hidden rounded-lg">
+				<div className="bg-background flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg">
 					<Header />
-					<main className="flex-1 overflow-hidden">
+					<main className="min-h-0 flex-1 overflow-hidden">
 						<Thread />
 					</main>
 				</div>
