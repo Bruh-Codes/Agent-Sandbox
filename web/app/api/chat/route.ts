@@ -10,11 +10,15 @@ export const maxDuration = 30;
 function extractText(msg: any): string {
 	if (typeof msg.content === "string") return msg.content;
 	if (Array.isArray(msg.content)) {
-		return msg.content
+		const parts = msg.content
 			.filter((p: any) => p.type === "text")
 			.map((p: any) => p.text)
-			.join("\n");
+			.filter(Boolean);
+		if (parts.length > 0) return parts.join("\n");
+		const allText = msg.content.map((p: any) => p.text ?? "").join("");
+		if (allText) return allText;
 	}
+	if (msg.text) return msg.text;
 	return "";
 }
 
