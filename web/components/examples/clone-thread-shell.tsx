@@ -92,9 +92,7 @@ export const CloneThreadShell: FC<CloneThreadShellProps> = ({
 	return (
 		<SidebarProvider defaultOpen={true}>
 			<Sidebar collapsible="icon" className="bg-muted/30">
-				<SidebarHeaderInner>
-					{headerContent}
-				</SidebarHeaderInner>
+				<SidebarHeaderInner>{headerContent}</SidebarHeaderInner>
 				<SidebarContent>
 					<ThreadListRoot className="flex-1 p-3">
 						<NewThreadButton />

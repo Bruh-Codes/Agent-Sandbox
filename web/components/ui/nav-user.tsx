@@ -10,7 +10,7 @@ import {
 	Sparkles,
 } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -41,6 +41,7 @@ export function NavUser({
 	const { isMobile } = useSidebar();
 
 	const { data: session } = authClient.useSession();
+	const avatarUrl = user.avatar ?? session?.user?.image ?? undefined;
 
 	return (
 		<SidebarMenu>
@@ -56,7 +57,13 @@ export function NavUser({
 									className="h-8 w-8 rounded-lg"
 									data-slot="nav-user-avatar"
 								>
-									<AvatarImage src={user.avatar} alt={user.name} />
+									{avatarUrl && (
+										<img
+											src={avatarUrl}
+											alt={user.name}
+											className="aspect-square size-full rounded-full object-cover"
+										/>
+									)}
 									<AvatarFallback className="rounded-lg">
 										{user.name
 											.split(" ")
@@ -82,7 +89,13 @@ export function NavUser({
 							<DropdownMenuLabel className="p-0 font-normal">
 								<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 									<Avatar className="h-8 w-8 rounded-lg">
-										<AvatarImage src={user.avatar} alt={user.name} />
+										{avatarUrl && (
+											<img
+												src={avatarUrl}
+												alt={user.name}
+												className="aspect-square size-full rounded-full object-cover"
+											/>
+										)}
 										<AvatarFallback className="rounded-lg">
 											{user.name
 												.split(" ")
@@ -101,8 +114,7 @@ export function NavUser({
 
 						{session ? (
 							<>
-								<DropdownMenuSeparator />
-								<DropdownMenuGroup>
+								{/* <DropdownMenuGroup>
 									<DropdownMenuItem>
 										<BadgeCheck />
 										Account
@@ -116,7 +128,7 @@ export function NavUser({
 										Notifications
 									</DropdownMenuItem>
 								</DropdownMenuGroup>
-								<DropdownMenuSeparator />
+								<DropdownMenuSeparator /> */}
 								<DropdownMenuItem>
 									<LogOut />
 									Log out
