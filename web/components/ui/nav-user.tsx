@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSessionQuery } from "@/lib/queries/session";
+import { authClient } from "@/lib/auth-client";
 
 export function NavUser({
 	user,
@@ -149,7 +150,7 @@ export function NavUser({
 									</DropdownMenuItem>
 								</DropdownMenuGroup>
 								<DropdownMenuSeparator /> */}
-								<DropdownMenuItem>
+								<DropdownMenuItem onClick={() => authClient.signOut()}>
 									<LogOut />
 									Log out
 								</DropdownMenuItem>
