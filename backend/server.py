@@ -12,9 +12,18 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
-from openai import OpenAI
+from openai import AsyncOpenAI, OpenAI
 from pydantic import BaseModel
 
+from database import (
+    close_db,
+    create_session,
+    delete_session,
+    get_session_messages,
+    init_db,
+    is_db_configured,
+    update_session_messages,
+)
 from prompt_guard import (
     SECURITY_APPENDIX,
     detect_injection,
@@ -39,21 +48,32 @@ except ImportError:
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
 
 # ============================================================================
-# SESSION STORAGE (in-memory)
+# SESSION STORAGE (PostgreSQL via SQLAlchemy, fallback to in-memory)
 # ============================================================================
 
 sessions: dict[str, list[dict]] = {}
 
 
-def get_or_create_session(session_id: str | None) -> tuple[str, list[dict]]:
-    """Get existing session or create a new one."""
-    if session_id and session_id in sessions:
-        return session_id, sessions[session_id]
+async def get_or_create_session(session_id: str | None) -> tuple[str, list[dict]]:
+    """Get existing session or create a new one (DB first, then in-memory fallback)."""
+    if session_id:
+        if is_db_configured():
+            msgs = await get_session_messages(session_id)
+            if msgs is not None:
+                return session_id, msgs
+        elif session_id in sessions:
+            return session_id, sessions[session_id]
 
     new_id = str(uuid.uuid4())
     enhanced_prompt = SYSTEM_PROMPT + SECURITY_APPENDIX
-    sessions[new_id] = [{"role": "system", "content": enhanced_prompt}]
-    return new_id, sessions[new_id]
+    msgs = [{"role": "system", "content": enhanced_prompt}]
+
+    if is_db_configured():
+        await create_session(new_id, msgs)
+    else:
+        sessions[new_id] = msgs
+
+    return new_id, msgs
 
 
 # ============================================================================
@@ -65,6 +85,15 @@ def get_client() -> OpenAI:
     if not api_key:
         raise HTTPException(status_code=500, detail="OPENAI_API_KEY not configured")
     return OpenAI(
+        api_key=api_key,
+    )
+
+
+def get_async_client() -> AsyncOpenAI:
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise HTTPException(status_code=500, detail="OPENAI_API_KEY not configured")
+    return AsyncOpenAI(
         api_key=api_key,
     )
 
@@ -123,6 +152,13 @@ async def lifespan(app: FastAPI):
     global _knowledge_loaded
     print("FarmDesk API starting...")
     print(f"   Model: {get_model()}")
+
+    await init_db()
+    if is_db_configured():
+        print("   Database: PostgreSQL connected")
+    else:
+        print("   Database: in-memory (no DATABASE_URL set)")
+
     try:
         n = load_all()
         _knowledge_loaded = n > 0
@@ -132,6 +168,7 @@ async def lifespan(app: FastAPI):
         print(f"   Knowledge base: failed to load ({e})")
     yield
     print("FarmDesk API shutting down.")
+    await close_db()
 
 
 app = FastAPI(
@@ -175,6 +212,7 @@ class HealthResponse(BaseModel):
     status: str
     model: str
     active_sessions: int
+    db_configured: bool = False
 
 
 def retrieve_context(query_text: str) -> str:
@@ -216,6 +254,7 @@ async def health_check():
         status="healthy",
         model=get_model(),
         active_sessions=len(sessions),
+        db_configured=is_db_configured(),
     )
 
 
@@ -236,7 +275,7 @@ async def chat(chat_req: ChatRequest, request: Request):
         raise HTTPException(status_code=400, detail="Message cannot be empty")
 
     # Get or create session early — needed for session_id even on rejection
-    session_id, _ = get_or_create_session(chat_req.session_id)
+    session_id, _ = await get_or_create_session(chat_req.session_id)
 
     # --- Injection detection (returns friendly response, not raw error) ---
     is_injection, label, _ = detect_injection(raw)
@@ -253,7 +292,7 @@ async def chat(chat_req: ChatRequest, request: Request):
     # --- Sanitize ---
     cleaned = sanitize_input(raw)
 
-    _, messages = get_or_create_session(session_id)
+    _, messages = await get_or_create_session(session_id)
     apply_client_history(messages, chat_req.history)
 
     try:
@@ -274,6 +313,7 @@ async def chat(chat_req: ChatRequest, request: Request):
 
         # Add assistant reply to history
         messages.append({"role": "assistant", "content": reply})
+        await update_session_messages(session_id, messages)
 
         return ChatResponse(reply=reply, session_id=session_id)
 
@@ -281,7 +321,8 @@ async def chat(chat_req: ChatRequest, request: Request):
         raise
     except Exception as e:
         # Remove the failed user message from history
-        messages.pop()
+        if len(messages) > 1:
+            messages.pop()
         raise HTTPException(status_code=500, detail=f"AI service error: {str(e)}")
 
 
@@ -302,7 +343,7 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
         raise HTTPException(status_code=400, detail="Message cannot be empty")
 
     # Get or create session early — needed for session_id even on rejection
-    session_id, _ = get_or_create_session(chat_req.session_id)
+    session_id, _ = await get_or_create_session(chat_req.session_id)
 
     # --- Injection detection (streams a friendly response, not a raw error) ---
     is_injection, label, _ = detect_injection(raw)
@@ -313,7 +354,7 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
             f"for Ghana. Please ask a genuine farming question."
         )
 
-        def reject_stream():
+        async def reject_stream():
             yield rejection
 
         return StreamingResponse(
@@ -329,7 +370,7 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
     # --- Sanitize ---
     cleaned = sanitize_input(raw)
 
-    _, messages = get_or_create_session(session_id)
+    _, messages = await get_or_create_session(session_id)
     apply_client_history(messages, chat_req.history)
 
     context = retrieve_context(cleaned)
@@ -338,14 +379,14 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
 
     messages.append({"role": "user", "content": wrap_user_message(cleaned)})
 
-    def generate():
+    async def generate():
         full_reply = ""
 
         try:
-            client = get_client()
+            client = get_async_client()
             model = get_model()
 
-            stream = client.chat.completions.create(
+            stream = await client.chat.completions.create(
                 model=model,
                 messages=messages,
                 temperature=0.2,
@@ -353,16 +394,13 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
                 stream=True,
             )
 
-            for chunk in stream:
+            async for chunk in stream:
                 delta = chunk.choices[0].delta.content or ""
                 if not delta:
                     continue
 
                 full_reply += delta
 
-                # Sanitize the small streamed chunk before sending to client:
-                # - remove pipe characters
-                # - drop lines that are only dash separators
                 cleaned = delta.replace("|", "-")
                 cleaned_lines = []
                 for ln in cleaned.splitlines():
@@ -374,11 +412,12 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
                 if cleaned_delta:
                     yield cleaned_delta
 
-            # Sanitize final assembled reply before saving
             cleaned = sanitize_reply(full_reply)
             messages.append({"role": "assistant", "content": cleaned})
+            await update_session_messages(session_id, messages)
         except Exception as e:
-            messages.pop()
+            if len(messages) > 1:
+                messages.pop()
             yield f"\n\n[FarmDesk stream error: {str(e)}]"
 
     return StreamingResponse(
@@ -396,11 +435,15 @@ async def stream_chat(chat_req: ChatRequest, request: Request):
 async def reset_chat(request: ChatRequest | None = None):
     """Reset/start a new conversation."""
     # If there's an existing session, remove it
-    if request and request.session_id and request.session_id in sessions:
-        del sessions[request.session_id]
+    sid = request.session_id if request else None
+    if sid:
+        if is_db_configured():
+            await delete_session(sid)
+        elif sid in sessions:
+            del sessions[sid]
 
     # Create fresh session
-    new_id, _ = get_or_create_session(None)
+    new_id, _ = await get_or_create_session(None)
 
     return ResetResponse(
         session_id=new_id,
