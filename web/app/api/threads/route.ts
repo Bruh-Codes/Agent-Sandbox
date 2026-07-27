@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { headers } from "next/headers";
 import { eq, desc } from "drizzle-orm";
 import { auth } from "@/lib/auth";
