@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, jsonb, index } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, jsonb, index, json } from "drizzle-orm/pg-core";
 
 export const threads = pgTable(
 	"threads",
@@ -30,3 +30,10 @@ export const messages = pgTable(
 	},
 	(t) => [index("messages_thread_idx").on(t.threadId)],
 );
+
+export const chatSessions = pgTable("chat_sessions", {
+	id: text("id").primaryKey(),
+	messages: json("messages").$type<Record<string, unknown>[]>().notNull(),
+	createdAt: timestamp("created_at").notNull().defaultNow(),
+	updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
