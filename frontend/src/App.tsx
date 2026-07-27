@@ -39,7 +39,7 @@ const starterMessages: ChatItem[] = [
 	{
 		id: 1,
 		role: "assistant",
-		content: "Hi, I'm FarmDesk. Tell me what you need.",
+		content: "Hi, I'm your FarmDesk. Tell me what you need.",
 	},
 ];
 
@@ -370,7 +370,11 @@ export default function App() {
 					<div className="border-b border-farm-border p-4">
 						<div className="mb-4 flex items-center gap-3">
 							<div className="flex size-10 items-center justify-center rounded-lg bg-farm-primary">
-								<img src={assistantAvatar} alt="FarmDesk" className="size-10 rounded-lg" />
+								<img
+									src={assistantAvatar}
+									alt="FarmDesk"
+									className="size-10 rounded-lg"
+								/>
 							</div>
 							<div className="min-w-0">
 								<p className="truncate text-sm font-semibold text-farm-text">

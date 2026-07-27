@@ -9,11 +9,19 @@ import uuid
 from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from openai import OpenAI
 from pydantic import BaseModel
+
+from prompt_guard import (
+    SECURITY_APPENDIX,
+    detect_injection,
+    rate_limiter,
+    sanitize_input,
+    wrap_user_message,
+)
 
 try:
     from .agri_prompt import SYSTEM_PROMPT
@@ -43,7 +51,8 @@ def get_or_create_session(session_id: str | None) -> tuple[str, list[dict]]:
         return session_id, sessions[session_id]
 
     new_id = str(uuid.uuid4())
-    sessions[new_id] = [{"role": "system", "content": SYSTEM_PROMPT}]
+    enhanced_prompt = SYSTEM_PROMPT + SECURITY_APPENDIX
+    sessions[new_id] = [{"role": "system", "content": enhanced_prompt}]
     return new_id, sessions[new_id]
 
 
@@ -189,7 +198,11 @@ def apply_client_history(messages: list[dict], history: list[dict[str, str]] | N
         content = item.get("content", "").strip()
         if role not in {"user", "assistant"} or not content:
             continue
-        messages.append({"role": role, "content": content})
+        # Sanitize client-supplied history to prevent injection through stored state
+        safe_content = sanitize_input(content)
+        if role == "user":
+            safe_content = wrap_user_message(safe_content)
+        messages.append({"role": role, "content": safe_content})
 
 
 # ============================================================================
@@ -207,23 +220,41 @@ async def health_check():
 
 
 @app.post("/api/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
+async def chat(chat_req: ChatRequest, request: Request):
     """Send a message and get a response from FarmDesk."""
-    if not request.message.strip():
+    # --- Rate limiting (per IP) ---
+    client_ip = request.client.host if request.client else "unknown"
+    allowed, remaining = rate_limiter.check(client_ip)
+    if not allowed:
+        raise HTTPException(
+            status_code=429,
+            detail="Too many requests. Please wait before sending another message.",
+        )
+
+    raw = chat_req.message
+    if not raw.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty")
 
-    # Get or create session
-    session_id, messages = get_or_create_session(request.session_id)
-    apply_client_history(messages, request.history)
+    # Get or create session early — needed for session_id even on rejection
+    session_id, _ = get_or_create_session(chat_req.session_id)
 
-    # Retrieve RAG context
-    context = retrieve_context(request.message)
-    if context:
-        rag_message = {"role": "system", "content": f"Here is relevant information from the knowledge base:\n{context}"}
-        messages.append(rag_message)
+    # --- Injection detection (returns friendly response, not raw error) ---
+    is_injection, label, _ = detect_injection(raw)
+    if is_injection:
+        return ChatResponse(
+            reply=(
+                f"I can't answer that — your message was flagged as a prompt injection "
+                f"attempt (policy: {label}). I'm only designed to give agriculture advice "
+                f"for Ghana. Please ask a genuine farming question."
+            ),
+            session_id=session_id,
+        )
 
-    # Add user message
-    messages.append({"role": "user", "content": request.message})
+    # --- Sanitize ---
+    cleaned = sanitize_input(raw)
+
+    _, messages = get_or_create_session(session_id)
+    apply_client_history(messages, chat_req.history)
 
     try:
         client = get_client()
@@ -246,6 +277,8 @@ async def chat(request: ChatRequest):
 
         return ChatResponse(reply=reply, session_id=session_id)
 
+    except HTTPException:
+        raise
     except Exception as e:
         # Remove the failed user message from history
         messages.pop()
@@ -253,19 +286,57 @@ async def chat(request: ChatRequest):
 
 
 @app.post("/api/chat/stream")
-async def stream_chat(request: ChatRequest):
+async def stream_chat(chat_req: ChatRequest, request: Request):
     """Send a message and stream FarmDesk's response as plain text chunks."""
-    if not request.message.strip():
+    # --- Rate limiting (per IP) ---
+    client_ip = request.client.host if request.client else "unknown"
+    allowed, remaining = rate_limiter.check(client_ip)
+    if not allowed:
+        raise HTTPException(
+            status_code=429,
+            detail="Too many requests. Please wait before sending another message.",
+        )
+
+    raw = chat_req.message
+    if not raw.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty")
 
-    session_id, messages = get_or_create_session(request.session_id)
-    apply_client_history(messages, request.history)
+    # Get or create session early — needed for session_id even on rejection
+    session_id, _ = get_or_create_session(chat_req.session_id)
 
-    context = retrieve_context(request.message)
+    # --- Injection detection (streams a friendly response, not a raw error) ---
+    is_injection, label, _ = detect_injection(raw)
+    if is_injection:
+        rejection = (
+            f"I can't answer that — your message was flagged as a prompt injection "
+            f"attempt (policy: {label}). I'm only designed to give agriculture advice "
+            f"for Ghana. Please ask a genuine farming question."
+        )
+
+        def reject_stream():
+            yield rejection
+
+        return StreamingResponse(
+            reject_stream(),
+            media_type="text/plain; charset=utf-8",
+            headers={
+                "Cache-Control": "no-cache",
+                "X-Session-Id": session_id,
+                "Access-Control-Expose-Headers": "X-Session-Id",
+            },
+        )
+
+    # --- Sanitize ---
+    cleaned = sanitize_input(raw)
+
+    _, messages = get_or_create_session(session_id)
+    apply_client_history(messages, chat_req.history)
+
+    context = retrieve_context(cleaned)
     if context:
         messages.append({"role": "system", "content": f"Here is relevant information from the knowledge base:\n{context}"})
 
-    messages.append({"role": "user", "content": request.message})
+    messages.append({"role": "user", "content": wrap_user_message(cleaned)})
 
     def generate():
         full_reply = ""
